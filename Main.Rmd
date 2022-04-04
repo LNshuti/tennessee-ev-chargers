@@ -9,11 +9,12 @@ knitr::opts_chunk$set(echo = TRUE)
 knitr::opts_chunk$set(warning = FALSE)
 knitr::opts_chunk$set(message = FALSE)
 suppressWarnings(suppressMessages(source("tennessee-ev-chargers/manifest.R")))
+census_api_key(key = "172fe4d0406dc33d213ab43cf13a042c180c421f", 
+               overwrite = TRUE)
 ```
 
 
 ```{r}
-census_api_key("172fe4d0406dc33d213ab43cf13a042c180c421f", install = FALSE)
 tn_wide <- get_acs(
   geography = "county",
   state = "Tennessee",
@@ -21,4 +22,13 @@ tn_wide <- get_acs(
   output = "wide",
   year = 2019
 )
+
+repo_path <- "tennessee-ev-chargers"
+readr::write_csv(tn_wide, paste0(repo_path, "/data/tn_medianincome_2019.csv"))
+```
+
+
+```{r}
+
+
 ```
