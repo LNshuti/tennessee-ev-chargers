@@ -43,4 +43,21 @@ sf_county <-
   st_transform(crs = 4326) %>% 
   filter(statefp == "47") %>% 
   left_join(tn_wide, by = "geoid")
+
+
+tn_income_plt <-
+  sf_county %>%
+  ggplot() + 
+  geom_sf(aes(fill = medinc_e)) +
+  scale_fill_gradient2(low = scales::muted("blue"),
+                       mid = "white",high = scales::muted("red"),
+                       midpoint = 44122,limits = c(0,150000)) + 
+  coord_sf(datum=NA) + 
+  labs(fill="Median Income") + 
+  ggtitle("Tennessee Median Income by county, 2019") + 
+  ggthemes::theme_tufte(base_family = "Gill Sans")
+
+ggsave(tn_income_plt,
+       filename = paste0(repo_path, "/output/tn_income_2019.png"), 
+       width = 8, height = 4)
 ```

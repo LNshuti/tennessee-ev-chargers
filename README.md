@@ -19,3 +19,23 @@ sf_county <-
   filter(statefp == "47") %>% 
   left_join(tn_wide, by = "geoid")
 ```
+
+Plot baseline Tennesseee Map showing the distribution of median income by county. 
+
+
+```{r}
+  sf_county %>%
+  ggplot() + 
+  geom_sf(aes(fill = medinc_e)) +
+  scale_fill_gradient2(low = scales::muted("blue"),
+                       mid = "white",high = scales::muted("red"),
+                       midpoint = 44122,limits = c(0,150000)) + 
+  coord_sf(datum=NA) + 
+  labs(fill="Median Income, 2019") + 
+  ggtitle("Tennessee Median Income by county") + 
+  ggthemes::theme_tufte(base_family = "Gill Sans")
+```
+
+![TN Median Income Map](tennessee-ev-chargers/output/tn_income_2019.png)
+
+
