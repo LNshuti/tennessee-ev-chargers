@@ -30,9 +30,3 @@ sf_county <-
   ggtitle("Tennessee Median Income by county") + 
   ggthemes::theme_tufte(base_family = "Gill Sans")
 ```
-
-![](output/tn_income_2019.png)
-
-![](output/tn_census_income_plt_2019.png)
-
-

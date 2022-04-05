@@ -10,36 +10,10 @@ knitr::opts_chunk$set(warning = FALSE)
 knitr::opts_chunk$set(message = FALSE)
 
 repo_path <- "tennessee-ev-chargers"
-
 suppressWarnings(suppressMessages(source(paste0(repo_path, "/manifest.R"))))
-# census_api_key(key = "172fe4d0406dc33d213ab43cf13a042c180c421f", 
-#                overwrite = TRUE)
 ```
 
-
-```{r}
-# tn_wide <- get_acs(
-#   geography = "county",
-#   state = "Tennessee",
-#   variables = c(medinc = "B19013_001"),
-#   output = "wide",
-#   year = 2019
-# )
-
-#readr::write_csv(tn_wide, paste0(repo_path, "/data/tn_medianincome_2019.csv"))
-
-# tn_wide_census <- 
-#   get_acs(geography = "tract", 
-#           state = "Tennessee",
-#           variables = c(medinc = "B19013_001"),
-#           output = "wide",
-#           year = 2019)
-
-# readr::write_csv(tn_wide_census,
-#                  paste0(repo_path, "/data/tn_censustrack_medianincome_2019.csv"))
-```
-
-
+# Import income data for TN and location data for EV chargers.
 ```{r}
 tn_wide <- 
   read_csv(paste0(repo_path, "/data/tn_medianincome_2019.csv")) %>% 
@@ -52,12 +26,6 @@ zip_tract_xwalk <-
   janitor::clean_names() %>% 
   rename(geoid = tract)
 
-tn_censustract_inc <-
-  read_csv(paste0(repo_path, "/data/tn_censustrack_medianincome_2019.csv")) %>% 
-  janitor::clean_names() %>%
-  mutate(geoid = paste0(geoid)) #%>% 
-  # inner_join(zip_tract_xwalk, by = "geoid")
-
 sf_county <-
   read_sf(paste0(repo_path,
                  "/data/county/01_county-shape-file.shp")) %>% 
@@ -65,16 +33,21 @@ sf_county <-
   filter(statefp == "47") %>% 
   left_join(tn_wide, by = "geoid")
 
-tn_census_shape <- 
-   read_sf(paste0(repo_path,
-                 "/data/tl_2017_47_tract/tl_2017_47_tract.shp")) %>% 
-  st_transform(crs = 4326) %>% 
-  janitor::clean_names() %>% 
-  left_join(tn_censustract_inc, "geoid")
+alt_fuel_stations_tn <- 
+  read_csv("tn-chargers/data/alt_fuel_stations.csv") %>%
+  janitor::clean_names() %>%
+  filter(state == "TN" & fuel_type_code == "ELEC") %>%
+  select(station_name, street_address, city, zip, cards_accepted, 
+         latitude, longitude)
+
+tn_stations_carded <- 
+  alt_fuel_stations_tn %>%
+  filter(!is.na(cards_accepted))
 ```
 
-Counties
+
 ```{r}
+# Counties
 tn_income_plt <-
   sf_county %>%
   ggplot() + 
@@ -87,29 +60,40 @@ tn_income_plt <-
   ggtitle("Tennessee Median Income by county, 2019") + 
   ggthemes::theme_tufte(base_family = "Gill Sans")
 
-ggsave(tn_income_plt,
-       filename = paste0(repo_path, "/output/tn_income_2019.png"), 
-       width = 8, height = 4)
+# ggsave(tn_income_plt,
+#        filename = paste0(repo_path, "/output/tn_income_2019.png"), 
+#        width = 8, height = 4)
 ```
 
-Census tracts
+# Add EV charging locations
 ```{r}
-tn_census_income_plt <-
-  tn_census_shape %>%
-  ggplot() + 
-  geom_sf(aes(fill = medinc_e)) +
-  scale_fill_gradient2(low = scales::muted("blue"),
-                       mid = "white",high = scales::muted("red"),
-                       midpoint = 49520,limits = c(0,250000)) + 
-  coord_sf(datum=NA) + 
-  labs(fill="") + 
-  ggtitle("Tennessee Median Income by census tract, 2019") + 
-  ggthemes::theme_tufte(base_family = "Gill Sans")
+nashville_stations <- 
+  alt_fuel_stations_tn %>% 
+  filter(city == "Nashville") %>% 
+  mutate(unique_stations = stringr::word(station_name, 1,2, sep=" ")) %>% 
+  select(unique_stations, latitude, longitude) %>%
+  unique()
 
-ggsave(tn_census_income_plt,
-       filename = paste0(repo_path, "/output/tn_census_income_plt_2019.png"), 
-       width = 8, height = 4)
+tn_income_plt + 
+  geom_text_repel(data = xy_hosp, aes(x=x,y=y,label = mname),cex = 1.5) +
+  geom_point(data = xy_hosp, aes(x=x,y=y,size = total_cases_zip1),colour = "darkblue")
 
 
+chargingtypeColor <- colorFactor(rainbow(65), nashville_stations$unique_stations)
 
+
+tn_chargers_leaflet <- 
+  leaflet(nashville_stations) %>% 
+    addTiles() %>% 
+    addCircleMarkers(
+        data = nashville_stations, 
+                color = ~chargingtypeColor(unique_stations),
+
+        lat = ~latitude, 
+        lng = ~longitude, 
+        popup = paste(nashville_stations$station_name)
+    )
+
+# for printing the maps
+htmltools::tagList(tn_chargers_leaflet)
 ```
