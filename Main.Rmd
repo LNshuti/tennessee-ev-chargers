@@ -11,9 +11,9 @@ knitr::opts_chunk$set(message = FALSE)
 
 repo_path <- "tennessee-ev-chargers"
 
-suppressWarnings(suppressMessages(source(paste0(repo_path, "manifest.R"))))
-census_api_key(key = "172fe4d0406dc33d213ab43cf13a042c180c421f", 
-               overwrite = TRUE)
+suppressWarnings(suppressMessages(source(paste0(repo_path, "/manifest.R"))))
+# census_api_key(key = "172fe4d0406dc33d213ab43cf13a042c180c421f", 
+#                overwrite = TRUE)
 ```
 
 
@@ -32,11 +32,15 @@ census_api_key(key = "172fe4d0406dc33d213ab43cf13a042c180c421f",
 
 ```{r}
 tn_wide <- 
-  read_csv(paste0(repo_path, "/data/tn_medianincome_2019.csv"))
+  read_csv(paste0(repo_path, "/data/tn_medianincome_2019.csv")) %>% 
+  janitor::clean_names() %>% 
+  mutate(geoid = paste0(geoid))
 
 
 sf_county <-
   read_sf(paste0(repo_path,
-                 "data/county/01_county-shape-file.shp")) %>% 
-  st_transform(crs = 4326)
+                 "/data/county/01_county-shape-file.shp")) %>% 
+  st_transform(crs = 4326) %>% 
+  filter(statefp == "47") %>% 
+  left_join(tn_wide, by = "geoid")
 ```
