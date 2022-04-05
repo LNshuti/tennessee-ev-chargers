@@ -18,13 +18,8 @@ sf_county <-
   st_transform(crs = 4326) %>% 
   filter(statefp == "47") %>% 
   left_join(tn_wide, by = "geoid")
-```
-
-Plot baseline Tennesseee Map showing the distribution of median income by county. 
-
-
-```{r}
-  sf_county %>%
+  
+   sf_county %>%
   ggplot() + 
   geom_sf(aes(fill = medinc_e)) +
   scale_fill_gradient2(low = scales::muted("blue"),
@@ -36,6 +31,9 @@ Plot baseline Tennesseee Map showing the distribution of median income by county
   ggthemes::theme_tufte(base_family = "Gill Sans")
 ```
 
-![](tennessee-ev-chargers/output/tn_income_2019.png)
+Plot baseline Tennessee Map showing the distribution of median income by county. 
+
+
+![](/Users/leoncenshuti/Desktop/portfolio/tennessee-ev-chargers/output/tn_income_2019.png)
 
 
