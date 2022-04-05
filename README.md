@@ -36,6 +36,6 @@ Plot baseline Tennesseee Map showing the distribution of median income by county
   ggthemes::theme_tufte(base_family = "Gill Sans")
 ```
 
-![TN Median Income Map](tennessee-ev-chargers/output/tn_income_2019.png)
+![](tennessee-ev-chargers/output/tn_income_2019.png)
 
 
