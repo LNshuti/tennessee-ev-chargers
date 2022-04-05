@@ -37,3 +37,8 @@ Plot baseline Tennessee Map showing the distribution of median income by county.
 ![](output/tn_income_2019.png)
 
 
+Adding more granularity by using census tracts
+
+![](output/tn_census_income_plt_2019.png)
+
+

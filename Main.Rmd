@@ -27,6 +27,16 @@ suppressWarnings(suppressMessages(source(paste0(repo_path, "/manifest.R"))))
 # )
 
 #readr::write_csv(tn_wide, paste0(repo_path, "/data/tn_medianincome_2019.csv"))
+
+# tn_wide_census <- 
+#   get_acs(geography = "tract", 
+#           state = "Tennessee",
+#           variables = c(medinc = "B19013_001"),
+#           output = "wide",
+#           year = 2019)
+
+# readr::write_csv(tn_wide_census,
+#                  paste0(repo_path, "/data/tn_censustrack_medianincome_2019.csv"))
 ```
 
 
@@ -36,6 +46,17 @@ tn_wide <-
   janitor::clean_names() %>% 
   mutate(geoid = paste0(geoid))
 
+# Downloaded from https://www.huduser.gov/portal/datasets/usps_crosswalk.html
+zip_tract_xwalk <- 
+  readxl::read_xlsx(paste0(repo_path, "/data/ZIP_TRACT_122019.xlsx")) %>%
+  janitor::clean_names() %>% 
+  rename(geoid = tract)
+
+tn_censustract_inc <-
+  read_csv(paste0(repo_path, "/data/tn_censustrack_medianincome_2019.csv")) %>% 
+  janitor::clean_names() %>%
+  mutate(geoid = paste0(geoid)) #%>% 
+  # inner_join(zip_tract_xwalk, by = "geoid")
 
 sf_county <-
   read_sf(paste0(repo_path,
@@ -44,7 +65,16 @@ sf_county <-
   filter(statefp == "47") %>% 
   left_join(tn_wide, by = "geoid")
 
+tn_census_shape <- 
+   read_sf(paste0(repo_path,
+                 "/data/tl_2017_47_tract/tl_2017_47_tract.shp")) %>% 
+  st_transform(crs = 4326) %>% 
+  janitor::clean_names() %>% 
+  left_join(tn_censustract_inc, "geoid")
+```
 
+Counties
+```{r}
 tn_income_plt <-
   sf_county %>%
   ggplot() + 
@@ -60,4 +90,26 @@ tn_income_plt <-
 ggsave(tn_income_plt,
        filename = paste0(repo_path, "/output/tn_income_2019.png"), 
        width = 8, height = 4)
+```
+
+Census tracts
+```{r}
+tn_census_income_plt <-
+  tn_census_shape %>%
+  ggplot() + 
+  geom_sf(aes(fill = medinc_e)) +
+  scale_fill_gradient2(low = scales::muted("blue"),
+                       mid = "white",high = scales::muted("red"),
+                       midpoint = 49520,limits = c(0,250000)) + 
+  coord_sf(datum=NA) + 
+  labs(fill="") + 
+  ggtitle("Tennessee Median Income by census tract, 2019") + 
+  ggthemes::theme_tufte(base_family = "Gill Sans")
+
+ggsave(tn_census_income_plt,
+       filename = paste0(repo_path, "/output/tn_census_income_plt_2019.png"), 
+       width = 8, height = 4)
+
+
+
 ```
