@@ -31,8 +31,6 @@ sf_county <-
   ggthemes::theme_tufte(base_family = "Gill Sans")
 ```
 
-Plot baseline Tennessee Map showing the distribution of median income by county. 
-
 
 ![](output/tn_income_2019.png)
 
