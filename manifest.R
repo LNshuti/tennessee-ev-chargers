@@ -1,5 +1,6 @@
 library(tidycensus)
 library(leaflet)
+library(htmlwidgets)
 library(sf)
 library(aws.s3)
 library(tidyverse)

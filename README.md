@@ -30,3 +30,4 @@ sf_county <-
   ggtitle("Tennessee Median Income by county") + 
   ggthemes::theme_tufte(base_family = "Gill Sans")
 ```
+

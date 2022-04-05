@@ -94,6 +94,10 @@ tn_chargers_leaflet <-
         popup = paste(nashville_stations$station_name)
     )
 
+saveWidget(tn_chargers_leaflet, 
+           file = paste0(repo_path,"/output/tn_chargers.html"))
+
+
 # for printing the maps
 htmltools::tagList(tn_chargers_leaflet)
 ```
