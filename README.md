@@ -1,6 +1,6 @@
-# Davidson County EV Chargers
+# Tennessee EV Charger Locator
 
-App showing interactive map of EV charging infrastructure in Davidson county, utilising Shiny and Leaflet in R. In addition to showing exact locations of all EV chargers on the county map, we include the median income by geography to test the hypothesis that the location of chargers is correlated with an area's income.  
+App showing interactive map of EV charging infrastructure in Tennessee using Shiny and Leaflet in R. In addition to showing exact locations of all public EV chargers, we include the median income by geography to test the hypothesis that the location of chargers is correlated with an area's income.  
 
 ```{r}
 tn_wide <- get_acs(
@@ -34,6 +34,6 @@ sf_county <-
 Plot baseline Tennessee Map showing the distribution of median income by county. 
 
 
-![](/Users/leoncenshuti/Desktop/portfolio/tennessee-ev-chargers/output/tn_income_2019.png)
+![](output/tn_income_2019.png)
 
 
