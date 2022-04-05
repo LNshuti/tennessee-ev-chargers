@@ -53,7 +53,7 @@ tn_income_plt <-
                        mid = "white",high = scales::muted("red"),
                        midpoint = 44122,limits = c(0,150000)) + 
   coord_sf(datum=NA) + 
-  labs(fill="Median Income") + 
+  labs(fill="") + 
   ggtitle("Tennessee Median Income by county, 2019") + 
   ggthemes::theme_tufte(base_family = "Gill Sans")
 
