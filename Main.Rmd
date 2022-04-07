@@ -66,18 +66,15 @@ tn_income_plt <-
 
 tn_ev_charger_locations <-
   tn_income_plt + 
-  geom_point(data = alt_fuel_stations_tn,
-                  aes(x=longitude,y=latitude)) + 
-  labs(title = "Tennessee EV charging Infrastructure by County",
+  geom_point(data = alt_fuel_stations_tn, aes(x=longitude,y=latitude)) + 
+  labs(title = "",
        caption = "Data source: \n2019 Median Household Income Data from the American Community Survey. census.gov/programs-surveys/acs/. \nEV coordinates obtained using the National Renewable Energy Lab API. developer.nrel.gov. \nEach dot represents a terminal of one or more EV chargers") +
-   theme_tufte_revised() +
+  theme_tufte_revised() +
   labs(fill = "Median Income") +
   theme(
-    plot.title = element_text(size = 12, face = "bold"),
-    plot.caption = element_text(size = 10, face = "italic", hjust = 0),
+    plot.caption = element_text(size = 12, hjust = 0),
     axis.title.x=element_blank(),
-    axis.title.y=element_blank(),
-    plot.caption.position =  "plot"
+    axis.title.y=element_blank(), plot.caption.position =  "plot"
   ) 
  
   
