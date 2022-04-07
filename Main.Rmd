@@ -86,7 +86,7 @@ ggsave(tn_ev_charger_locations,
        width = 8, height = 4)
 ```
 
-# Nashville Plot  Commuting zones
+# Nashville Plot Commuting zones
 
 
 ```{r}
@@ -112,24 +112,7 @@ tn_ev_charger_locations <-
     axis.title.y=element_blank(),
     plot.caption.position =  "plot"
   ) 
-```
 
-# From John Graves's healthcaremarkets repo
-
-
-
-
-
-
-
-
-
-
-
-
-
-# Add EV charging locations
-```{r}
 nashville_stations <- 
   alt_fuel_stations_tn %>% 
   filter(city == "Nashville") %>% 
@@ -137,27 +120,19 @@ nashville_stations <-
   select(unique_stations, latitude, longitude) %>%
   unique()
 
-
 tn_chargers_leaflet <- 
   leaflet(nashville_stations) %>% 
     addTiles() %>% 
     addCircleMarkers(
-        data = nashville_stations, 
-                color = ~chargingtypeColor(unique_stations),
-
-        lat = ~latitude, 
-        lng = ~longitude, 
+        data = nashville_stations, color = ~chargingtypeColor(unique_stations),
+        lat = ~latitude, lng = ~longitude, 
         popup = paste(nashville_stations$station_name)
     )
 
-saveWidget(tn_chargers_leaflet, 
-           file = paste0(repo_path,"/output/tn_chargers.html"))
-
+saveWidget(tn_chargers_leaflet, file = paste0(repo_path,"/output/tn_chargers.html"))
 
 # for printing the maps
 htmltools::tagList(tn_chargers_leaflet)
-
-htmlwidgets::saveWidget(frameableWidget(tn_chargers_leaflet),
-                        paste0(repo_path,"/output/tn_chargers.html"))
+htmlwidgets::saveWidget(frameableWidget(tn_chargers_leaflet), paste0(repo_path,"/output/tn_chargers.html"))
 
 ```
