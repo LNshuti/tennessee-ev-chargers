@@ -221,38 +221,45 @@ pre code {
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucmVwb19wYXRoIDwtIFwidGVubmVzc2VlLWV2LWNoYXJnZXJzXCJcbnN1cHByZXNzV2FybmluZ3Moc3VwcHJlc3NNZXNzYWdlcyhzb3VyY2UocGFzdGUwKHJlcG9fcGF0aCwgXCIvbWFuaWZlc3QuUlwiKSkpKVxuYGBgIn0= -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucmVwb19wYXRoIDwtIFwidGVubmVzc2VlLWV2LWNoYXJnZXJzXCJcbnN1cHByZXNzV2FybmluZ3Moc3VwcHJlc3NNZXNzYWdlcyhzb3VyY2UoXCJtYW5pZmVzdC5SXCIpKSlcbmBgYCJ9 -->
 <pre class="r"><code>repo_path &lt;- &quot;tennessee-ev-chargers&quot;
-suppressWarnings(suppressMessages(source(paste0(repo_path, &quot;/manifest.R&quot;))))</code></pre>
+suppressWarnings(suppressMessages(source(&quot;manifest.R&quot;)))</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxucGxvdChjYXJzKVxuYGBgXG5gYGAifQ== -->
-<pre class="r"><code>```r
-plot(cars)</code></pre>
-<pre><code>
-&lt;!-- rnb-source-end --&gt;
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG5hbHRfZnVlbF9zdGF0aW9uc190biA8LSBcbiAgcmVhZF9jc3YoXCIuLi90bi1jaGFyZ2Vycy9kYXRhL2FsdF9mdWVsX3N0YXRpb25zLmNzdlwiKSAlPiVcbiAgamFuaXRvcjo6Y2xlYW5fbmFtZXMoKSAlPiVcbiAgZmlsdGVyKHN0YXRlID09IFwiVE5cIiAmIGZ1ZWxfdHlwZV9jb2RlID09IFwiRUxFQ1wiKSAlPiVcbiAgc2VsZWN0KHN0YXRpb25fbmFtZSwgc3RyZWV0X2FkZHJlc3MsIGNpdHksIHppcCwgY2FyZHNfYWNjZXB0ZWQsIFxuICAgICAgICAgbGF0aXR1ZGUsIGxvbmdpdHVkZSlcblxuYGBgIn0= -->
+<pre class="r"><code>
+alt_fuel_stations_tn &lt;- 
+  read_csv(&quot;../tn-chargers/data/alt_fuel_stations.csv&quot;) %&gt;%
+  janitor::clean_names() %&gt;%
+  filter(state == &quot;TN&quot; &amp; fuel_type_code == &quot;ELEC&quot;) %&gt;%
+  select(station_name, street_address, city, zip, cards_accepted, 
+         latitude, longitude)
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiV2FybmluZzogT25lIG9yIG1vcmUgcGFyc2luZyBpc3N1ZXMsIHNlZSBgcHJvYmxlbXMoKWAgZm9yIGRldGFpbHNcbiJ9 -->
+<pre><code>Warning: One or more parsing issues, see `problems()` for details</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiUm93czogNjA5MzQgQ29sdW1uczogNjVcbuKUgOKUgCBDb2x1bW4gc3BlY2lmaWNhdGlvbiDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIBcbkRlbGltaXRlcjogXCIsXCJcbmNociAgKDQwKTogRnVlbCBUeXBlIENvZGUsIFN0YXRpb24gTmFtZSwgU3RyZWV0IEFkZHJlc3MsIEludGVyc2VjdGlvbiBEaXJlY3Rpb25zLCBDaS4uLlxuZGJsICAgKDgpOiBFViBMZXZlbDIgRVZTRSBOdW0sIEVWIERDIEZhc3QgQ291bnQsIExhdGl0dWRlLCBMb25naXR1ZGUsIElELCBDTkcgRGlzcGVuLi4uXG5sZ2wgICgxNSk6IFBsdXM0LCBFeHBlY3RlZCBEYXRlLCBFViBMZXZlbDEgRVZTRSBOdW0sIEVWIE90aGVyIEluZm8sIEZlZGVyYWwgQWdlbmN5IEkuLi5cbmRhdGUgICgyKTogRGF0ZSBMYXN0IENvbmZpcm1lZCwgT3BlbiBEYXRlXG5cbuKEuSBVc2UgYHNwZWMoKWAgdG8gcmV0cmlldmUgdGhlIGZ1bGwgY29sdW1uIHNwZWNpZmljYXRpb24gZm9yIHRoaXMgZGF0YS5cbuKEuSBTcGVjaWZ5IHRoZSBjb2x1bW4gdHlwZXMgb3Igc2V0IGBzaG93X2NvbF90eXBlcyA9IEZBTFNFYCB0byBxdWlldCB0aGlzIG1lc3NhZ2UuXG4ifQ== -->
+<pre><code>Rows: 60934 Columns: 65
+── Column specification ────────────────────────────────────────────────────────────────
+Delimiter: &quot;,&quot;
+chr  (40): Fuel Type Code, Station Name, Street Address, Intersection Directions, Ci...
+dbl   (8): EV Level2 EVSE Num, EV DC Fast Count, Latitude, Longitude, ID, CNG Dispen...
+lgl  (15): Plus4, Expected Date, EV Level1 EVSE Num, EV Other Info, Federal Agency I...
+date  (2): Date Last Confirmed, Open Date
 
-&lt;!-- rnb-chunk-end --&gt;
-
-
-&lt;!-- rnb-text-begin --&gt;
-
-
-
-
-&lt;!-- rnb-text-end --&gt;
-
-
-&lt;!-- rnb-chunk-begin --&gt;
-
-
-&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubmFzaHZpbGxlX3N0YXRpb25zIDwtIFxuICBhbHRfZnVlbF9zdGF0aW9uc190biAlPiUgXG4gIGZpbHRlcihjaXR5ID09IFwiTmFzaHZpbGxlXCIpICU+JSBcbiAgbXV0YXRlKHVuaXF1ZV9zdGF0aW9ucyA9IHN0cmluZ3I6OndvcmQoc3RhdGlvbl9uYW1lLCAxLDIsIHNlcD1cIiBcIikpICU+JSBcbiAgc2VsZWN0KHVuaXF1ZV9zdGF0aW9ucywgbGF0aXR1ZGUsIGxvbmdpdHVkZSkgJT4lXG4gIHVuaXF1ZSgpXG5cbnRuX2NoYXJnZXJzX2xlYWZsZXQgPC0gXG4gIGxlYWZsZXQobmFzaHZpbGxlX3N0YXRpb25zKSAlPiUgXG4gICAgYWRkVGlsZXMoKSAlPiUgXG4gICAgYWRkQ2lyY2xlTWFya2VycyhcbiAgICAgICAgZGF0YSA9IG5hc2h2aWxsZV9zdGF0aW9ucywgY29sb3IgPSB+Y2hhcmdpbmd0eXBlQ29sb3IodW5pcXVlX3N0YXRpb25zKSxcbiAgICAgICAgbGF0ID0gfmxhdGl0dWRlLCBsbmcgPSB+bG9uZ2l0dWRlLCBcbiAgICAgICAgcG9wdXAgPSBwYXN0ZShuYXNodmlsbGVfc3RhdGlvbnMkc3RhdGlvbl9uYW1lKVxuICAgIClcblxuXG4jIGZvciBwcmludGluZyB0aGUgbWFwc1xuaHRtbHRvb2xzOjp0YWdMaXN0KHRuX2NoYXJnZXJzX2xlYWZsZXQpXG5gYGAifQ== --&gt;
-
-```r
-nashville_stations &lt;- 
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubmFzaHZpbGxlX3N0YXRpb25zIDwtIFxuICBhbHRfZnVlbF9zdGF0aW9uc190biAlPiUgXG4gIGZpbHRlcihjaXR5ID09IFwiTmFzaHZpbGxlXCIpICU+JSBcbiAgbXV0YXRlKHVuaXF1ZV9zdGF0aW9ucyA9IHN0cmluZ3I6OndvcmQoc3RhdGlvbl9uYW1lLCAxLDIsIHNlcD1cIiBcIikpICU+JSBcbiAgc2VsZWN0KHVuaXF1ZV9zdGF0aW9ucywgbGF0aXR1ZGUsIGxvbmdpdHVkZSkgJT4lXG4gIHVuaXF1ZSgpXG5cbnRuX2NoYXJnZXJzX2xlYWZsZXQgPC0gXG4gIGxlYWZsZXQobmFzaHZpbGxlX3N0YXRpb25zKSAlPiUgXG4gICAgYWRkVGlsZXMoKSAlPiUgXG4gICAgYWRkQ2lyY2xlTWFya2VycyhcbiAgICAgICAgZGF0YSA9IG5hc2h2aWxsZV9zdGF0aW9ucywgY29sb3IgPSB+Y2hhcmdpbmd0eXBlQ29sb3IodW5pcXVlX3N0YXRpb25zKSxcbiAgICAgICAgbGF0ID0gfmxhdGl0dWRlLCBsbmcgPSB+bG9uZ2l0dWRlLCBcbiAgICAgICAgcG9wdXAgPSBwYXN0ZShuYXNodmlsbGVfc3RhdGlvbnMkc3RhdGlvbl9uYW1lKVxuICAgIClcbmBgYCJ9 -->
+<pre class="r"><code>nashville_stations &lt;- 
   alt_fuel_stations_tn %&gt;% 
   filter(city == &quot;Nashville&quot;) %&gt;% 
   mutate(unique_stations = stringr::word(station_name, 1,2, sep=&quot; &quot;)) %&gt;% 
@@ -266,17 +273,18 @@ tn_chargers_leaflet &lt;-
         data = nashville_stations, color = ~chargingtypeColor(unique_stations),
         lat = ~latitude, lng = ~longitude, 
         popup = paste(nashville_stations$station_name)
-    )
-
-
-# for printing the maps
-htmltools::tagList(tn_chargers_leaflet)</code></pre>
+    )</code></pre>
 <!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiV2FybmluZzogVW5rbm93biBvciB1bmluaXRpYWxpc2VkIGNvbHVtbjogYHN0YXRpb25fbmFtZWAuXG5FcnJvciBpbiBjaGFyZ2luZ3R5cGVDb2xvcih1bmlxdWVfc3RhdGlvbnMpIDogXG4gIGNvdWxkIG5vdCBmaW5kIGZ1bmN0aW9uIFwiY2hhcmdpbmd0eXBlQ29sb3JcIlxuIn0= -->
+<pre><code>Warning: Unknown or uninitialised column: `station_name`.
+Error in chargingtypeColor(unique_stations) : 
+  could not find function &quot;chargingtypeColor&quot;</code></pre>
+<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiUiBOb3RlYm9vayIKb3V0cHV0OiBodG1sX25vdGVib29rCmVkaXRvcl9vcHRpb25zOiAKICBjaHVua19vdXRwdXRfdHlwZTogaW5saW5lCi0tLQoKCgpgYGB7cn0KcmVwb19wYXRoIDwtICJ0ZW5uZXNzZWUtZXYtY2hhcmdlcnMiCnN1cHByZXNzV2FybmluZ3Moc3VwcHJlc3NNZXNzYWdlcyhzb3VyY2UocGFzdGUwKHJlcG9fcGF0aCwgIi9tYW5pZmVzdC5SIikpKSkKYGBgCgoKYGBge3J9CnNmX2NvdW50eSA8LQogIHJlYWRfc2YocGFzdGUwKHJlcG9fcGF0aCwKICAgICAgICAgICAgICAgICAiL2RhdGEvY291bnR5LzAxX2NvdW50eS1zaGFwZS1maWxlLnNocCIpKSAlPiUgCiAgc3RfdHJhbnNmb3JtKGNycyA9IDQzMjYpICU+JSAKICBmaWx0ZXIoc3RhdGVmcCA9PSAiNDciKSAlPiUgCiAgbGVmdF9qb2luKHRuX3dpZGUsIGJ5ID0gImdlb2lkIikKCmFsdF9mdWVsX3N0YXRpb25zX3RuIDwtIAogIHJlYWRfY3N2KCJ0bi1jaGFyZ2Vycy9kYXRhL2FsdF9mdWVsX3N0YXRpb25zLmNzdiIpICU+JQogIGphbml0b3I6OmNsZWFuX25hbWVzKCkgJT4lCiAgZmlsdGVyKHN0YXRlID09ICJUTiIgJiBmdWVsX3R5cGVfY29kZSA9PSAiRUxFQyIpICU+JQogIHNlbGVjdChzdGF0aW9uX25hbWUsIHN0cmVldF9hZGRyZXNzLCBjaXR5LCB6aXAsIGNhcmRzX2FjY2VwdGVkLCAKICAgICAgICAgbGF0aXR1ZGUsIGxvbmdpdHVkZSkKYGBgCgoKYGBge3J9Cm5hc2h2aWxsZV9zdGF0aW9ucyA8LSAKICBhbHRfZnVlbF9zdGF0aW9uc190biAlPiUgCiAgZmlsdGVyKGNpdHkgPT0gIk5hc2h2aWxsZSIpICU+JSAKICBtdXRhdGUodW5pcXVlX3N0YXRpb25zID0gc3RyaW5ncjo6d29yZChzdGF0aW9uX25hbWUsIDEsMiwgc2VwPSIgIikpICU+JSAKICBzZWxlY3QodW5pcXVlX3N0YXRpb25zLCBsYXRpdHVkZSwgbG9uZ2l0dWRlKSAlPiUKICB1bmlxdWUoKQoKdG5fY2hhcmdlcnNfbGVhZmxldCA8LSAKICBsZWFmbGV0KG5hc2h2aWxsZV9zdGF0aW9ucykgJT4lIAogICAgYWRkVGlsZXMoKSAlPiUgCiAgICBhZGRDaXJjbGVNYXJrZXJzKAogICAgICAgIGRhdGEgPSBuYXNodmlsbGVfc3RhdGlvbnMsIGNvbG9yID0gfmNoYXJnaW5ndHlwZUNvbG9yKHVuaXF1ZV9zdGF0aW9ucyksCiAgICAgICAgbGF0ID0gfmxhdGl0dWRlLCBsbmcgPSB+bG9uZ2l0dWRlLCAKICAgICAgICBwb3B1cCA9IHBhc3RlKG5hc2h2aWxsZV9zdGF0aW9ucyRzdGF0aW9uX25hbWUpCiAgICApCgoKIyBmb3IgcHJpbnRpbmcgdGhlIG1hcHMKaHRtbHRvb2xzOjp0YWdMaXN0KHRuX2NoYXJnZXJzX2xlYWZsZXQpCmBgYAoK</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiUiBOb3RlYm9vayIKb3V0cHV0OiBodG1sX25vdGVib29rCmVkaXRvcl9vcHRpb25zOiAKICBjaHVua19vdXRwdXRfdHlwZTogaW5saW5lCi0tLQoKCgpgYGB7cn0KcmVwb19wYXRoIDwtICJ0ZW5uZXNzZWUtZXYtY2hhcmdlcnMiCnN1cHByZXNzV2FybmluZ3Moc3VwcHJlc3NNZXNzYWdlcyhzb3VyY2UoIm1hbmlmZXN0LlIiKSkpCmBgYAoKCmBgYHtyfQpzZl9jb3VudHkgPC0KICByZWFkX3NmKHBhc3RlMCgiZGF0YS9jb3VudHkvMDFfY291bnR5LXNoYXBlLWZpbGUuc2hwIikpICU+JSAKICBzdF90cmFuc2Zvcm0oY3JzID0gNDMyNikgJT4lIAogIGZpbHRlcihzdGF0ZWZwID09ICI0NyIpICU+JSAKICBsZWZ0X2pvaW4odG5fd2lkZSwgYnkgPSAiZ2VvaWQiKQoKYWx0X2Z1ZWxfc3RhdGlvbnNfdG4gPC0gCiAgcmVhZF9jc3YoIi4uL3RuLWNoYXJnZXJzL2RhdGEvYWx0X2Z1ZWxfc3RhdGlvbnMuY3N2IikgJT4lCiAgamFuaXRvcjo6Y2xlYW5fbmFtZXMoKSAlPiUKICBmaWx0ZXIoc3RhdGUgPT0gIlROIiAmIGZ1ZWxfdHlwZV9jb2RlID09ICJFTEVDIikgJT4lCiAgc2VsZWN0KHN0YXRpb25fbmFtZSwgc3RyZWV0X2FkZHJlc3MsIGNpdHksIHppcCwgY2FyZHNfYWNjZXB0ZWQsIAogICAgICAgICBsYXRpdHVkZSwgbG9uZ2l0dWRlKQpgYGAKCgpgYGB7cn0KbmFzaHZpbGxlX3N0YXRpb25zIDwtIAogIGFsdF9mdWVsX3N0YXRpb25zX3RuICU+JSAKICBmaWx0ZXIoY2l0eSA9PSAiTmFzaHZpbGxlIikgJT4lIAogIG11dGF0ZSh1bmlxdWVfc3RhdGlvbnMgPSBzdHJpbmdyOjp3b3JkKHN0YXRpb25fbmFtZSwgMSwyLCBzZXA9IiAiKSkgJT4lIAogIHNlbGVjdCh1bmlxdWVfc3RhdGlvbnMsIGxhdGl0dWRlLCBsb25naXR1ZGUpICU+JQogIHVuaXF1ZSgpCgp0bl9jaGFyZ2Vyc19sZWFmbGV0IDwtIAogIGxlYWZsZXQobmFzaHZpbGxlX3N0YXRpb25zKSAlPiUgCiAgICBhZGRUaWxlcygpICU+JSAKICAgIGFkZENpcmNsZU1hcmtlcnMoCiAgICAgICAgZGF0YSA9IG5hc2h2aWxsZV9zdGF0aW9ucywKICAgICAgICBsYXQgPSB+bGF0aXR1ZGUsIGxuZyA9IH5sb25naXR1ZGUsIAogICAgICAgIHBvcHVwID0gcGFzdGUobmFzaHZpbGxlX3N0YXRpb25zJHN0YXRpb25fbmFtZSkKICAgICkKCgojIGZvciBwcmludGluZyB0aGUgbWFwcwpodG1sdG9vbHM6OnRhZ0xpc3QodG5fY2hhcmdlcnNfbGVhZmxldCkKYGBgCgo=</div>
 
 
 

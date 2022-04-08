@@ -9,20 +9,19 @@ editor_options:
 
 ```{r}
 repo_path <- "tennessee-ev-chargers"
-suppressWarnings(suppressMessages(source(paste0(repo_path, "/manifest.R"))))
+suppressWarnings(suppressMessages(source("manifest.R")))
 ```
 
 
 ```{r}
 sf_county <-
-  read_sf(paste0(repo_path,
-                 "/data/county/01_county-shape-file.shp")) %>% 
+  read_sf(paste0("data/county/01_county-shape-file.shp")) %>% 
   st_transform(crs = 4326) %>% 
   filter(statefp == "47") %>% 
   left_join(tn_wide, by = "geoid")
 
 alt_fuel_stations_tn <- 
-  read_csv("tn-chargers/data/alt_fuel_stations.csv") %>%
+  read_csv("../tn-chargers/data/alt_fuel_stations.csv") %>%
   janitor::clean_names() %>%
   filter(state == "TN" & fuel_type_code == "ELEC") %>%
   select(station_name, street_address, city, zip, cards_accepted, 
@@ -42,7 +41,7 @@ tn_chargers_leaflet <-
   leaflet(nashville_stations) %>% 
     addTiles() %>% 
     addCircleMarkers(
-        data = nashville_stations, color = ~chargingtypeColor(unique_stations),
+        data = nashville_stations,
         lat = ~latitude, lng = ~longitude, 
         popup = paste(nashville_stations$station_name)
     )
