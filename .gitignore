@@ -37,3 +37,8 @@ vignettes/*.pdf
 
 # R Environment Variables
 .Renviron
+data/BEA-2010-tn0ibr/
+data/CtyToCtyFlows1980To2010/
+data/CBSA-2010-16i4k3s/
+data/ERS-2010-2fcqzlr/
+data/PEA-2010-2jr7ar3/
