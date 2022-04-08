@@ -7,13 +7,12 @@ editor_options:
 
 
 
-```{r}
-repo_path <- "tennessee-ev-chargers"
+```{r, warning = FALSE}
 suppressWarnings(suppressMessages(source("manifest.R")))
 ```
 
 
-```{r}
+```{r, warning = FALSE}
 sf_county <-
   read_sf(paste0("data/county/01_county-shape-file.shp")) %>% 
   st_transform(crs = 4326) %>% 
