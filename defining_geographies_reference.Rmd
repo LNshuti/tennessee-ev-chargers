@@ -7,11 +7,7 @@ editor_options:
 
 
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-knitr::opts_chunk$set(warning = FALSE)
-knitr::opts_chunk$set(message = FALSE)
-
+```{r}
 repo_path <- "tennessee-ev-chargers"
 suppressWarnings(suppressMessages(source(paste0(repo_path, "/manifest.R"))))
 ```
