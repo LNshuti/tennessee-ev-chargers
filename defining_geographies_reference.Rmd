@@ -5,30 +5,54 @@ editor_options:
   chunk_output_type: inline
 ---
 
-This text was lifted as is from John Graves' health-care-markets repo on github. Proper attribution will be added shortly. 
 
-This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
 
-Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Cmd+Shift+Enter*. 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(warning = FALSE)
+knitr::opts_chunk$set(message = FALSE)
 
-## Commuting Zones
-
-Commuting zones are comprised of geographically contiguous counties with strong within-area clustering of commuting ties between residental and work county, and weak across-area ties. The [latest official commuting zone geography files](https://www.ers.usda.gov/data-products/commuting-zones-and-labor-market-areas/) are based on patterns observed in the 2000 census. However, more recent county-to-county commuting data are available based on the 2009-2013 American Community Survey (ACS)  and could be used to construct new commuting zone geographies. 
-
-For now, the zones used here will draw on the shapefiles constructed based on 2010 Census data by researchers at [Penn State](https://sites.psu.edu/psucz/).
-
-This description of the history and methods of commuting zones from the U.S. Department of Agriculture (USDA) is useful:
-
-> The ERS Commuting Zones (CZs) and Labor Market Areas (LMAs) were first developed in the 1980s as ways to better delineate local economies. County boundaries are not always adequate confines for a local economy and often reflect political boundaries rather than an area's local economy. CZs and LMAs are geographic units of analysis intended to more closely reflect the local economy where people live and work. Beginning in 1980 and continuing through 2000, hierarchical cluster analysis was used along with the Census Bureau's journey to work data to group counties into these areas. In 2000, there were 709 CZs delineated for the U.S., 741 in 1990, and 768 in 1980. LMAs are similar to CZs except that they had to have a minimum population of 100,000 persons. LMAs were only estimated in 1980 and 1990. This was done in order for the Census Bureau to create microdata samples using decennial census data (1980 PUMS-D, 1990 PUMS-L) that avoided disclosure. The LMAs were discontinued in 2000 because researchers found them to be too large and not as useful as the CZs. The identical methodology was used to develop CZs for all three decades.
+repo_path <- "tennessee-ev-chargers"
+suppressWarnings(suppressMessages(source(paste0(repo_path, "/manifest.R"))))
+```
 
 
 ```{r}
-plot(cars)
+sf_county <-
+  read_sf(paste0(repo_path,
+                 "/data/county/01_county-shape-file.shp")) %>% 
+  st_transform(crs = 4326) %>% 
+  filter(statefp == "47") %>% 
+  left_join(tn_wide, by = "geoid")
+
+alt_fuel_stations_tn <- 
+  read_csv("tn-chargers/data/alt_fuel_stations.csv") %>%
+  janitor::clean_names() %>%
+  filter(state == "TN" & fuel_type_code == "ELEC") %>%
+  select(station_name, street_address, city, zip, cards_accepted, 
+         latitude, longitude)
 ```
 
-Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Cmd+Option+I*.
 
-When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Cmd+Shift+K* to preview the HTML file). 
+```{r}
+nashville_stations <- 
+  alt_fuel_stations_tn %>% 
+  filter(city == "Nashville") %>% 
+  mutate(unique_stations = stringr::word(station_name, 1,2, sep=" ")) %>% 
+  select(unique_stations, latitude, longitude) %>%
+  unique()
 
-The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
+tn_chargers_leaflet <- 
+  leaflet(nashville_stations) %>% 
+    addTiles() %>% 
+    addCircleMarkers(
+        data = nashville_stations, color = ~chargingtypeColor(unique_stations),
+        lat = ~latitude, lng = ~longitude, 
+        popup = paste(nashville_stations$station_name)
+    )
+
+
+# for printing the maps
+htmltools::tagList(tn_chargers_leaflet)
+```
 

@@ -219,31 +219,58 @@ pre code {
 
 
 <!-- rnb-text-begin -->
-<p>This text was lifted as is from John Graves’ health-care-markets repo on github. Proper attribution will be added shortly.</p>
-<p>This is an <a href="http://rmarkdown.rstudio.com">R Markdown</a> Notebook. When you execute code within the notebook, the results appear beneath the code.</p>
-<p>Try executing this chunk by clicking the <em>Run</em> button within the chunk or by placing your cursor inside it and pressing <em>Cmd+Shift+Enter</em>.</p>
-<div id="commuting-zones" class="section level2">
-<h2>Commuting Zones</h2>
-<p>Commuting zones are comprised of geographically contiguous counties with strong within-area clustering of commuting ties between residental and work county, and weak across-area ties. The <a href="https://www.ers.usda.gov/data-products/commuting-zones-and-labor-market-areas/">latest official commuting zone geography files</a> are based on patterns observed in the 2000 census. However, more recent county-to-county commuting data are available based on the 2009-2013 American Community Survey (ACS) and could be used to construct new commuting zone geographies.</p>
-<p>For now, the zones used here will draw on the shapefiles constructed based on 2010 Census data by researchers at <a href="https://sites.psu.edu/psucz/">Penn State</a>.</p>
-<p>This description of the history and methods of commuting zones from the U.S. Department of Agriculture (USDA) is useful:</p>
-<blockquote>
-<p>The ERS Commuting Zones (CZs) and Labor Market Areas (LMAs) were first developed in the 1980s as ways to better delineate local economies. County boundaries are not always adequate confines for a local economy and often reflect political boundaries rather than an area’s local economy. CZs and LMAs are geographic units of analysis intended to more closely reflect the local economy where people live and work. Beginning in 1980 and continuing through 2000, hierarchical cluster analysis was used along with the Census Bureau’s journey to work data to group counties into these areas. In 2000, there were 709 CZs delineated for the U.S., 741 in 1990, and 768 in 1980. LMAs are similar to CZs except that they had to have a minimum population of 100,000 persons. LMAs were only estimated in 1980 and 1990. This was done in order for the Census Bureau to create microdata samples using decennial census data (1980 PUMS-D, 1990 PUMS-L) that avoided disclosure. The LMAs were discontinued in 2000 because researchers found them to be too large and not as useful as the CZs. The identical methodology was used to develop CZs for all three decades.</p>
-</blockquote>
+<!-- rnb-text-end -->
+<!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucGxvdChjYXJzKVxuYGBgIn0= -->
-<pre class="r"><code>plot(cars)</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxucGxvdChjYXJzKVxuYGBgXG5gYGAifQ== -->
+<pre class="r"><code>```r
+plot(cars)</code></pre>
+<pre><code>
+&lt;!-- rnb-source-end --&gt;
+
+&lt;!-- rnb-chunk-end --&gt;
+
+
+&lt;!-- rnb-text-begin --&gt;
+
+
+
+
+&lt;!-- rnb-text-end --&gt;
+
+
+&lt;!-- rnb-chunk-begin --&gt;
+
+
+&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubmFzaHZpbGxlX3N0YXRpb25zIDwtIFxuICBhbHRfZnVlbF9zdGF0aW9uc190biAlPiUgXG4gIGZpbHRlcihjaXR5ID09IFwiTmFzaHZpbGxlXCIpICU+JSBcbiAgbXV0YXRlKHVuaXF1ZV9zdGF0aW9ucyA9IHN0cmluZ3I6OndvcmQoc3RhdGlvbl9uYW1lLCAxLDIsIHNlcD1cIiBcIikpICU+JSBcbiAgc2VsZWN0KHVuaXF1ZV9zdGF0aW9ucywgbGF0aXR1ZGUsIGxvbmdpdHVkZSkgJT4lXG4gIHVuaXF1ZSgpXG5cbnRuX2NoYXJnZXJzX2xlYWZsZXQgPC0gXG4gIGxlYWZsZXQobmFzaHZpbGxlX3N0YXRpb25zKSAlPiUgXG4gICAgYWRkVGlsZXMoKSAlPiUgXG4gICAgYWRkQ2lyY2xlTWFya2VycyhcbiAgICAgICAgZGF0YSA9IG5hc2h2aWxsZV9zdGF0aW9ucywgY29sb3IgPSB+Y2hhcmdpbmd0eXBlQ29sb3IodW5pcXVlX3N0YXRpb25zKSxcbiAgICAgICAgbGF0ID0gfmxhdGl0dWRlLCBsbmcgPSB+bG9uZ2l0dWRlLCBcbiAgICAgICAgcG9wdXAgPSBwYXN0ZShuYXNodmlsbGVfc3RhdGlvbnMkc3RhdGlvbl9uYW1lKVxuICAgIClcblxuXG4jIGZvciBwcmludGluZyB0aGUgbWFwc1xuaHRtbHRvb2xzOjp0YWdMaXN0KHRuX2NoYXJnZXJzX2xlYWZsZXQpXG5gYGAifQ== --&gt;
+
+```r
+nashville_stations &lt;- 
+  alt_fuel_stations_tn %&gt;% 
+  filter(city == &quot;Nashville&quot;) %&gt;% 
+  mutate(unique_stations = stringr::word(station_name, 1,2, sep=&quot; &quot;)) %&gt;% 
+  select(unique_stations, latitude, longitude) %&gt;%
+  unique()
+
+tn_chargers_leaflet &lt;- 
+  leaflet(nashville_stations) %&gt;% 
+    addTiles() %&gt;% 
+    addCircleMarkers(
+        data = nashville_stations, color = ~chargingtypeColor(unique_stations),
+        lat = ~latitude, lng = ~longitude, 
+        popup = paste(nashville_stations$station_name)
+    )
+
+
+# for printing the maps
+htmltools::tagList(tn_chargers_leaflet)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-<p>Add a new chunk by clicking the <em>Insert Chunk</em> button on the toolbar or by pressing <em>Cmd+Option+I</em>.</p>
-<p>When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the <em>Preview</em> button or press <em>Cmd+Shift+K</em> to preview the HTML file).</p>
-<p>The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike <em>Knit</em>, <em>Preview</em> does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.</p>
 <!-- rnb-text-end -->
-</div>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiUiBOb3RlYm9vayIKb3V0cHV0OiBodG1sX25vdGVib29rCmVkaXRvcl9vcHRpb25zOiAKICBjaHVua19vdXRwdXRfdHlwZTogaW5saW5lCi0tLQoKVGhpcyB0ZXh0IHdhcyBsaWZ0ZWQgYXMgaXMgZnJvbSBKb2huIEdyYXZlcycgaGVhbHRoLWNhcmUtbWFya2V0cyByZXBvIG9uIGdpdGh1Yi4gUHJvcGVyIGF0dHJpYnV0aW9uIHdpbGwgYmUgYWRkZWQgc2hvcnRseS4gCgpUaGlzIGlzIGFuIFtSIE1hcmtkb3duXShodHRwOi8vcm1hcmtkb3duLnJzdHVkaW8uY29tKSBOb3RlYm9vay4gV2hlbiB5b3UgZXhlY3V0ZSBjb2RlIHdpdGhpbiB0aGUgbm90ZWJvb2ssIHRoZSByZXN1bHRzIGFwcGVhciBiZW5lYXRoIHRoZSBjb2RlLiAKClRyeSBleGVjdXRpbmcgdGhpcyBjaHVuayBieSBjbGlja2luZyB0aGUgKlJ1biogYnV0dG9uIHdpdGhpbiB0aGUgY2h1bmsgb3IgYnkgcGxhY2luZyB5b3VyIGN1cnNvciBpbnNpZGUgaXQgYW5kIHByZXNzaW5nICpDbWQrU2hpZnQrRW50ZXIqLiAKCiMjIENvbW11dGluZyBab25lcwoKQ29tbXV0aW5nIHpvbmVzIGFyZSBjb21wcmlzZWQgb2YgZ2VvZ3JhcGhpY2FsbHkgY29udGlndW91cyBjb3VudGllcyB3aXRoIHN0cm9uZyB3aXRoaW4tYXJlYSBjbHVzdGVyaW5nIG9mIGNvbW11dGluZyB0aWVzIGJldHdlZW4gcmVzaWRlbnRhbCBhbmQgd29yayBjb3VudHksIGFuZCB3ZWFrIGFjcm9zcy1hcmVhIHRpZXMuIFRoZSBbbGF0ZXN0IG9mZmljaWFsIGNvbW11dGluZyB6b25lIGdlb2dyYXBoeSBmaWxlc10oaHR0cHM6Ly93d3cuZXJzLnVzZGEuZ292L2RhdGEtcHJvZHVjdHMvY29tbXV0aW5nLXpvbmVzLWFuZC1sYWJvci1tYXJrZXQtYXJlYXMvKSBhcmUgYmFzZWQgb24gcGF0dGVybnMgb2JzZXJ2ZWQgaW4gdGhlIDIwMDAgY2Vuc3VzLiBIb3dldmVyLCBtb3JlIHJlY2VudCBjb3VudHktdG8tY291bnR5IGNvbW11dGluZyBkYXRhIGFyZSBhdmFpbGFibGUgYmFzZWQgb24gdGhlIDIwMDktMjAxMyBBbWVyaWNhbiBDb21tdW5pdHkgU3VydmV5IChBQ1MpICBhbmQgY291bGQgYmUgdXNlZCB0byBjb25zdHJ1Y3QgbmV3IGNvbW11dGluZyB6b25lIGdlb2dyYXBoaWVzLiAKCkZvciBub3csIHRoZSB6b25lcyB1c2VkIGhlcmUgd2lsbCBkcmF3IG9uIHRoZSBzaGFwZWZpbGVzIGNvbnN0cnVjdGVkIGJhc2VkIG9uIDIwMTAgQ2Vuc3VzIGRhdGEgYnkgcmVzZWFyY2hlcnMgYXQgW1Blbm4gU3RhdGVdKGh0dHBzOi8vc2l0ZXMucHN1LmVkdS9wc3Vjei8pLgoKVGhpcyBkZXNjcmlwdGlvbiBvZiB0aGUgaGlzdG9yeSBhbmQgbWV0aG9kcyBvZiBjb21tdXRpbmcgem9uZXMgZnJvbSB0aGUgVS5TLiBEZXBhcnRtZW50IG9mIEFncmljdWx0dXJlIChVU0RBKSBpcyB1c2VmdWw6Cgo+IFRoZSBFUlMgQ29tbXV0aW5nIFpvbmVzIChDWnMpIGFuZCBMYWJvciBNYXJrZXQgQXJlYXMgKExNQXMpIHdlcmUgZmlyc3QgZGV2ZWxvcGVkIGluIHRoZSAxOTgwcyBhcyB3YXlzIHRvIGJldHRlciBkZWxpbmVhdGUgbG9jYWwgZWNvbm9taWVzLiBDb3VudHkgYm91bmRhcmllcyBhcmUgbm90IGFsd2F5cyBhZGVxdWF0ZSBjb25maW5lcyBmb3IgYSBsb2NhbCBlY29ub215IGFuZCBvZnRlbiByZWZsZWN0IHBvbGl0aWNhbCBib3VuZGFyaWVzIHJhdGhlciB0aGFuIGFuIGFyZWEncyBsb2NhbCBlY29ub215LiBDWnMgYW5kIExNQXMgYXJlIGdlb2dyYXBoaWMgdW5pdHMgb2YgYW5hbHlzaXMgaW50ZW5kZWQgdG8gbW9yZSBjbG9zZWx5IHJlZmxlY3QgdGhlIGxvY2FsIGVjb25vbXkgd2hlcmUgcGVvcGxlIGxpdmUgYW5kIHdvcmsuIEJlZ2lubmluZyBpbiAxOTgwIGFuZCBjb250aW51aW5nIHRocm91Z2ggMjAwMCwgaGllcmFyY2hpY2FsIGNsdXN0ZXIgYW5hbHlzaXMgd2FzIHVzZWQgYWxvbmcgd2l0aCB0aGUgQ2Vuc3VzIEJ1cmVhdSdzIGpvdXJuZXkgdG8gd29yayBkYXRhIHRvIGdyb3VwIGNvdW50aWVzIGludG8gdGhlc2UgYXJlYXMuIEluIDIwMDAsIHRoZXJlIHdlcmUgNzA5IENacyBkZWxpbmVhdGVkIGZvciB0aGUgVS5TLiwgNzQxIGluIDE5OTAsIGFuZCA3NjggaW4gMTk4MC4gTE1BcyBhcmUgc2ltaWxhciB0byBDWnMgZXhjZXB0IHRoYXQgdGhleSBoYWQgdG8gaGF2ZSBhIG1pbmltdW0gcG9wdWxhdGlvbiBvZiAxMDAsMDAwIHBlcnNvbnMuIExNQXMgd2VyZSBvbmx5IGVzdGltYXRlZCBpbiAxOTgwIGFuZCAxOTkwLiBUaGlzIHdhcyBkb25lIGluIG9yZGVyIGZvciB0aGUgQ2Vuc3VzIEJ1cmVhdSB0byBjcmVhdGUgbWljcm9kYXRhIHNhbXBsZXMgdXNpbmcgZGVjZW5uaWFsIGNlbnN1cyBkYXRhICgxOTgwIFBVTVMtRCwgMTk5MCBQVU1TLUwpIHRoYXQgYXZvaWRlZCBkaXNjbG9zdXJlLiBUaGUgTE1BcyB3ZXJlIGRpc2NvbnRpbnVlZCBpbiAyMDAwIGJlY2F1c2UgcmVzZWFyY2hlcnMgZm91bmQgdGhlbSB0byBiZSB0b28gbGFyZ2UgYW5kIG5vdCBhcyB1c2VmdWwgYXMgdGhlIENacy4gVGhlIGlkZW50aWNhbCBtZXRob2RvbG9neSB3YXMgdXNlZCB0byBkZXZlbG9wIENacyBmb3IgYWxsIHRocmVlIGRlY2FkZXMuCgoKYGBge3J9CnBsb3QoY2FycykKYGBgCgpBZGQgYSBuZXcgY2h1bmsgYnkgY2xpY2tpbmcgdGhlICpJbnNlcnQgQ2h1bmsqIGJ1dHRvbiBvbiB0aGUgdG9vbGJhciBvciBieSBwcmVzc2luZyAqQ21kK09wdGlvbitJKi4KCldoZW4geW91IHNhdmUgdGhlIG5vdGVib29rLCBhbiBIVE1MIGZpbGUgY29udGFpbmluZyB0aGUgY29kZSBhbmQgb3V0cHV0IHdpbGwgYmUgc2F2ZWQgYWxvbmdzaWRlIGl0IChjbGljayB0aGUgKlByZXZpZXcqIGJ1dHRvbiBvciBwcmVzcyAqQ21kK1NoaWZ0K0sqIHRvIHByZXZpZXcgdGhlIEhUTUwgZmlsZSkuIAoKVGhlIHByZXZpZXcgc2hvd3MgeW91IGEgcmVuZGVyZWQgSFRNTCBjb3B5IG9mIHRoZSBjb250ZW50cyBvZiB0aGUgZWRpdG9yLiBDb25zZXF1ZW50bHksIHVubGlrZSAqS25pdCosICpQcmV2aWV3KiBkb2VzIG5vdCBydW4gYW55IFIgY29kZSBjaHVua3MuIEluc3RlYWQsIHRoZSBvdXRwdXQgb2YgdGhlIGNodW5rIHdoZW4gaXQgd2FzIGxhc3QgcnVuIGluIHRoZSBlZGl0b3IgaXMgZGlzcGxheWVkLgoK</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiUiBOb3RlYm9vayIKb3V0cHV0OiBodG1sX25vdGVib29rCmVkaXRvcl9vcHRpb25zOiAKICBjaHVua19vdXRwdXRfdHlwZTogaW5saW5lCi0tLQoKCgpgYGB7ciBzZXR1cCwgaW5jbHVkZT1GQUxTRX0Ka25pdHI6Om9wdHNfY2h1bmskc2V0KGVjaG8gPSBUUlVFKQprbml0cjo6b3B0c19jaHVuayRzZXQod2FybmluZyA9IEZBTFNFKQprbml0cjo6b3B0c19jaHVuayRzZXQobWVzc2FnZSA9IEZBTFNFKQoKcmVwb19wYXRoIDwtICJ0ZW5uZXNzZWUtZXYtY2hhcmdlcnMiCnN1cHByZXNzV2FybmluZ3Moc3VwcHJlc3NNZXNzYWdlcyhzb3VyY2UocGFzdGUwKHJlcG9fcGF0aCwgIi9tYW5pZmVzdC5SIikpKSkKYGBgCgoKYGBge3J9CnNmX2NvdW50eSA8LQogIHJlYWRfc2YocGFzdGUwKHJlcG9fcGF0aCwKICAgICAgICAgICAgICAgICAiL2RhdGEvY291bnR5LzAxX2NvdW50eS1zaGFwZS1maWxlLnNocCIpKSAlPiUgCiAgc3RfdHJhbnNmb3JtKGNycyA9IDQzMjYpICU+JSAKICBmaWx0ZXIoc3RhdGVmcCA9PSAiNDciKSAlPiUgCiAgbGVmdF9qb2luKHRuX3dpZGUsIGJ5ID0gImdlb2lkIikKCmFsdF9mdWVsX3N0YXRpb25zX3RuIDwtIAogIHJlYWRfY3N2KCJ0bi1jaGFyZ2Vycy9kYXRhL2FsdF9mdWVsX3N0YXRpb25zLmNzdiIpICU+JQogIGphbml0b3I6OmNsZWFuX25hbWVzKCkgJT4lCiAgZmlsdGVyKHN0YXRlID09ICJUTiIgJiBmdWVsX3R5cGVfY29kZSA9PSAiRUxFQyIpICU+JQogIHNlbGVjdChzdGF0aW9uX25hbWUsIHN0cmVldF9hZGRyZXNzLCBjaXR5LCB6aXAsIGNhcmRzX2FjY2VwdGVkLCAKICAgICAgICAgbGF0aXR1ZGUsIGxvbmdpdHVkZSkKYGBgCgoKYGBge3J9Cm5hc2h2aWxsZV9zdGF0aW9ucyA8LSAKICBhbHRfZnVlbF9zdGF0aW9uc190biAlPiUgCiAgZmlsdGVyKGNpdHkgPT0gIk5hc2h2aWxsZSIpICU+JSAKICBtdXRhdGUodW5pcXVlX3N0YXRpb25zID0gc3RyaW5ncjo6d29yZChzdGF0aW9uX25hbWUsIDEsMiwgc2VwPSIgIikpICU+JSAKICBzZWxlY3QodW5pcXVlX3N0YXRpb25zLCBsYXRpdHVkZSwgbG9uZ2l0dWRlKSAlPiUKICB1bmlxdWUoKQoKdG5fY2hhcmdlcnNfbGVhZmxldCA8LSAKICBsZWFmbGV0KG5hc2h2aWxsZV9zdGF0aW9ucykgJT4lIAogICAgYWRkVGlsZXMoKSAlPiUgCiAgICBhZGRDaXJjbGVNYXJrZXJzKAogICAgICAgIGRhdGEgPSBuYXNodmlsbGVfc3RhdGlvbnMsIGNvbG9yID0gfmNoYXJnaW5ndHlwZUNvbG9yKHVuaXF1ZV9zdGF0aW9ucyksCiAgICAgICAgbGF0ID0gfmxhdGl0dWRlLCBsbmcgPSB+bG9uZ2l0dWRlLCAKICAgICAgICBwb3B1cCA9IHBhc3RlKG5hc2h2aWxsZV9zdGF0aW9ucyRzdGF0aW9uX25hbWUpCiAgICApCgoKIyBmb3IgcHJpbnRpbmcgdGhlIG1hcHMKaHRtbHRvb2xzOjp0YWdMaXN0KHRuX2NoYXJnZXJzX2xlYWZsZXQpCmBgYAoK</div>
 
 
 
