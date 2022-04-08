@@ -14,7 +14,7 @@ suppressWarnings(suppressMessages(source(paste0(repo_path, "/manifest.R"))))
 ```
 
 # Import income data for TN and location data for EV chargers.
-```{r}
+```{r, warning = FALSE, message = FALSE}
 tn_wide <- 
   read_csv(paste0(repo_path, "/data/tn_medianincome_2019.csv")) %>% 
   janitor::clean_names() %>% 
@@ -46,7 +46,7 @@ tn_stations_carded <-
 ```
 
 
-```{r}
+```{r, warning = FALSE, message = FALSE}
 # Counties
 tn_income_plt <-
   sf_county %>%
@@ -85,7 +85,7 @@ ggsave(tn_ev_charger_locations,
 
 
 
-```{r}
+```{r, warning = FALSE, message = FALSE}
 nashville_stations <- 
   alt_fuel_stations_tn %>% 
   filter(city == "Nashville") %>% 
