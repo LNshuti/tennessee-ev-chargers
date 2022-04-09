@@ -4,3 +4,8 @@ App showing interactive map of EV charging infrastructure in Tennessee using Shi
 
 
 ![Tennessee Charging Infrastructure](output/tn_ev_charger_locations_income_2019.png)
+
+
+
+
+![Davidson County Charging Infrastructure](output/davidson_ev_chargers_income_2019.png)

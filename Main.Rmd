@@ -42,12 +42,14 @@ alt_fuel_stations_tn <-
   read_csv("tn-chargers/data/alt_fuel_stations.csv") %>%
   janitor::clean_names() %>%
   filter(state == "TN" & fuel_type_code == "ELEC") %>%
-  select(station_name, street_address, city, zip, cards_accepted, 
-         latitude, longitude)
+  select(station_name, street_address, city, zip, cards_accepted, latitude, longitude)
 
-tn_stations_carded <- 
+alt_fuel_stations_davidson <- 
   alt_fuel_stations_tn %>%
-  filter(!is.na(cards_accepted))
+  filter(city == "Nashville")  %>%
+  mutate(unique_stations = stringr::word(station_name, 1,2, sep=" ")) %>% 
+  select(unique_stations, latitude, longitude,street_address, city, zip) %>%
+  unique()
 ```
 
 
@@ -88,45 +90,41 @@ tn_ev_charger_locations <-
 ```
 
 
-
 ```{r, warning = FALSE, message = FALSE}
-nashville_stations <- 
-  alt_fuel_stations_tn %>% 
-  filter(city == "Nashville") %>% 
-  mutate(unique_stations = stringr::word(station_name, 1,2, sep=" ")) %>% 
-  select(unique_stations, latitude, longitude) %>%
-  unique()
-
 tn_chargers_leaflet <- 
-  leaflet(nashville_stations) %>% 
-    addTiles() %>% 
-    addCircleMarkers(
-        data = nashville_stations, lat = ~latitude, lng = ~longitude, 
-        popup = paste(nashville_stations$station_name)
+  leaflet(alt_fuel_stations_davidson) %>% 
+  addTiles() %>% 
+  addCircleMarkers(data = alt_fuel_stations_davidson,
+                   lat = ~latitude, lng = ~longitude, 
+        popup = paste(alt_fuel_stations_davidson$unique_stations)
     )
 
 saveWidget(tn_chargers_leaflet, file = paste0(repo_path,"/output/tn_chargers.html"))
 
 # for printing the maps
 htmltools::tagList(tn_chargers_leaflet)
-htmlwidgets::saveWidget(frameableWidget(tn_chargers_leaflet),
-                        paste0(repo_path,"/output/tn_chargers.html"))
-
+# htmlwidgets::saveWidget(frameableWidget(tn_chargers_leaflet),
+#                         paste0(repo_path,"/output/tn_chargers.html"))
 ```
 
 
-```{r, warning = FALSE, message = FALSE}
-sf_cbsa_leaflet <- 
-  leaflet(sf_cbsa) %>% 
+```{r}
+library(tigris)
+
+cb_tn <- core_based_statistical_areas(year = 2018, cb = TRUE)
+davidson.metro <- filter(cb_tn, grepl("Davidson", NAME))
+
+davidson_chargers_leaflet <- 
+  leaflet(davidson.metro) %>% 
     addTiles() %>% 
     addCircleMarkers(
-        data = nashville_stations, lat = ~latitude, lng = ~longitude, 
-        popup = paste(nashville_stations$station_name)
+        data = alt_fuel_stations_davidson, lat = ~latitude, lng = ~longitude, 
+        popup = paste("Name", alt_fuel_stations_davidson$unique_stations, "<br>",
+                      "Addr:", alt_fuel_stations_davidson$street_address, "<br>",
+                      "City:", alt_fuel_stations_davidson$city, "<br>",
+                      "Zip:", alt_fuel_stations_davidson$zip)
+          
     )
 
-saveWidget(tn_chargers_leaflet, file = paste0(repo_path,"/output/tn_chargers.html"))
-
-# for printing the maps
-htmltools::tagList(tn_chargers_leaflet)
-htmlwidgets::saveWidget(frameableWidget(tn_chargers_leaflet), paste0(repo_path,"/output/tn_chargers.html"))
 ```
+
