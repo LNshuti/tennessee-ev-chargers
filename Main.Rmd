@@ -11,6 +11,7 @@ knitr::opts_chunk$set(message = FALSE)
 
 repo_path <- "tennessee-ev-chargers"
 suppressWarnings(suppressMessages(source(paste0(repo_path, "/manifest.R"))))
+suppressWarnings(suppressMessages(source(paste0(repo_path, "/move-ak-hi.R"))))
 ```
 
 # Import income data for TN and location data for EV chargers.
@@ -32,6 +33,10 @@ sf_county <-
   st_transform(crs = 4326) %>% 
   filter(statefp == "47") %>% 
   left_join(tn_wide, by = "geoid")
+
+sf_cbsa <- 
+  read_sf(paste0(repo_path, "/data/CBSA-2010-16i4k3s/CBSA10.shp")) %>% 
+  st_transform(crs = 4326) 
 
 alt_fuel_stations_tn <- 
   read_csv("tn-chargers/data/alt_fuel_stations.csv") %>%
@@ -76,11 +81,10 @@ tn_ev_charger_locations <-
     axis.title.x=element_blank(),
     axis.title.y=element_blank(), plot.caption.position =  "plot"
   ) 
- 
   
-ggsave(tn_ev_charger_locations,
-       filename = paste0(repo_path, "/output/tn_ev_charger_locations_income_2019.png"),
-       width = 8, height = 4)
+# ggsave(tn_ev_charger_locations,
+#        filename = paste0(repo_path, "/output/tn_ev_charger_locations_income_2019.png"),
+#        width = 8, height = 4)
 ```
 
 
@@ -97,8 +101,26 @@ tn_chargers_leaflet <-
   leaflet(nashville_stations) %>% 
     addTiles() %>% 
     addCircleMarkers(
-        data = nashville_stations, color = ~chargingtypeColor(unique_stations),
-        lat = ~latitude, lng = ~longitude, 
+        data = nashville_stations, lat = ~latitude, lng = ~longitude, 
+        popup = paste(nashville_stations$station_name)
+    )
+
+saveWidget(tn_chargers_leaflet, file = paste0(repo_path,"/output/tn_chargers.html"))
+
+# for printing the maps
+htmltools::tagList(tn_chargers_leaflet)
+htmlwidgets::saveWidget(frameableWidget(tn_chargers_leaflet),
+                        paste0(repo_path,"/output/tn_chargers.html"))
+
+```
+
+
+```{r, warning = FALSE, message = FALSE}
+sf_cbsa_leaflet <- 
+  leaflet(sf_cbsa) %>% 
+    addTiles() %>% 
+    addCircleMarkers(
+        data = nashville_stations, lat = ~latitude, lng = ~longitude, 
         popup = paste(nashville_stations$station_name)
     )
 
@@ -107,5 +129,4 @@ saveWidget(tn_chargers_leaflet, file = paste0(repo_path,"/output/tn_chargers.htm
 # for printing the maps
 htmltools::tagList(tn_chargers_leaflet)
 htmlwidgets::saveWidget(frameableWidget(tn_chargers_leaflet), paste0(repo_path,"/output/tn_chargers.html"))
-
 ```
