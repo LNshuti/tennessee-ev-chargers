@@ -111,6 +111,7 @@ tn_ev_charger_locations <-
 # ggsave(tn_ev_charger_locations,
 #        filename = paste0(repo_path, "/output/tn_ev_charger_locations_income_2019.png"),
 #        width = 8, height = 4)
+
 ```
 
 
@@ -140,11 +141,7 @@ davidson.metro <- filter(cb_tn, grepl("Davidson", NAME))
 
 # If you want to use predefined palettes in the RColorBrewer package:
 # Call RColorBrewer::display.brewer.all() to see all possible palettes
-pal <- colorFactor(
-  palette = 'Dark2',
-  domain = metro$charger_type
-)
-
+pal <- colorFactor(palette = 'Dark2', domain = metro$charger_type)
 
 davidson_chargers_leaflet <- 
   leaflet(davidson.metro) %>% 
