@@ -54,43 +54,50 @@ alt_fuel_stations_davidson <-
                                "Metro", station_name)) %>% 
   mutate(charger_type = ifelse(grepl("PREMIER", station_name, ignore.case = T), 
                                "Premier Parking", charger_type)) %>% 
-  mutate(charger_type = ifelse(grepl("BNA|TERM GARAGE", station_name, ignore.case = T), "BNA",
+  mutate(charger_type = ifelse(grepl("BNA|Terminal Dr", street_address, ignore.case = T), 
+                               "Airport", charger_type)) %>% 
+  mutate(charger_type = ifelse(grepl("BNA|AIRPORT", station_name, ignore.case = T), "Airport",
                                charger_type)) %>% 
   mutate(charger_type = ifelse(grepl("CHPT", station_name, ignore.case = T), "Chargepoint",
                                charger_type)) %>% 
   mutate(charger_type = ifelse(grepl("Nissan|BMW", station_name, ignore.case = T), "Car dealer",
                                charger_type)) %>% 
-   mutate(charger_type = ifelse(grepl("University", station_name, ignore.case = T), "University",
+  mutate(charger_type = ifelse(grepl("University", station_name, ignore.case = T), "University",
                                charger_type)) %>% 
   mutate(charger_type = ifelse(grepl("Marriott|Loews|Duke|Aertson", 
                                      station_name, ignore.case = T), "Hotel",
                                charger_type)) %>% 
-  mutate(charger_type = ifelse(grepl("The Shay|Windsor Tower|Rivertop",
-                                     station_name, ignore.case = T), "Apartment",
+  mutate(charger_type = ifelse(grepl("Shay|Windsor|Rivertop|Apex|oneC1T|Eleven North",
+                                     station_name, ignore.case = T), "Apartment complex",
                                charger_type))  %>%
   mutate(charger_type = ifelse(grepl("Tesla", station_name, ignore.case = T),
                                "Tesla", charger_type)) %>% 
-  mutate(charger_type = ifelse(grepl("Vanderbilt Medical|TCMC B|TriStar Southern",
+  mutate(charger_type = ifelse(grepl("Vanderbilt|TCMC|TriStar",
                                      station_name, ignore.case = T),
                                "Hospital", charger_type)) %>% 
-  mutate(charger_type = ifelse(grepl("WHOLEFOODS|TARGET CORP|Publix",
+  mutate(charger_type = ifelse(grepl("WHOLEFOODS|TARGET|Publix|Mapco",
                                      station_name, ignore.case = T),
-                               "Grocery store", charger_type)) 
+                               "Grocery store", charger_type)) %>%
+  mutate(charger_type = ifelse(grepl("Willowbrook", station_name, ignore.case = T),
+                                "Retail space", charger_type)) %>%
+  mutate(charger_type = ifelse(grepl("State Park", station_name, ignore.case = T),
+                                "State Park", charger_type)) %>%
+  mutate(charger_type = str_trim(charger_type)) %>%
+  mutate(len_name = str_length(charger_type)) 
   
-alt_fuel_stations_davidson %>% 
-   mutate(len_name = str_length(charger_type)) %>%
-  count(len_name)
-
-alt_fuel_stations_davidson <-
-  alt_fuel_stations_davidson %>% 
-  mutate(len_name = str_length(charger_type)) %>%
-  filter(str_length(charger_type) < 12)
-
-metro <- 
+fix_names <- 
   alt_fuel_stations_davidson %>% 
   filter(!(charger_type %in% c("Metro", "Premier Parking", "Chargepoint", "Car dealer", "Tesla",
-                               "Hotel", "University","Apartment", "BNA", "Grocery store",
-                               "Hospital")))
+                               "Hotel", "University","Apartment", "Airport", "Grocery store",
+                               "Hospital", "Apartment complex", "Retail space", "State Park"))) %>%
+  filter(len_name > 10)
+
+ev_stations_davidson_ <-
+  alt_fuel_stations_davidson %>% 
+  filter(charger_type %in% c("Metro", "Premier Parking", "Chargepoint", "Car dealer", "Tesla",
+                               "Hotel", "University","Apartment", "Airport", "Grocery store",
+                               "Hospital", "Apartment complex", "Retail space"))
+  
 ```
 
 
