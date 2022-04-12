@@ -50,30 +50,47 @@ alt_fuel_stations_davidson <-
   mutate(unique_stations = stringr::word(station_name, 1,2, sep=" ")) %>% 
   select(unique_stations,station_name, latitude, longitude,street_address, city, zip) %>%
   unique() %>% 
-  mutate(charger_type = ifelse(grepl("METRO", unique_stations, ignore.case = T), "Metro", unique_stations)) %>% 
-  mutate(charger_type = ifelse(grepl("PREMIER", unique_stations, ignore.case = T), 
+  mutate(charger_type = ifelse(grepl("METRO", station_name, ignore.case = T),
+                               "Metro", station_name)) %>% 
+  mutate(charger_type = ifelse(grepl("PREMIER", station_name, ignore.case = T), 
                                "Premier Parking", charger_type)) %>% 
-  mutate(charger_type = ifelse(grepl("BNA|TERM GARAGE", unique_stations, ignore.case = T), "BNA",
+  mutate(charger_type = ifelse(grepl("BNA|TERM GARAGE", station_name, ignore.case = T), "BNA",
                                charger_type)) %>% 
-  mutate(charger_type = ifelse(grepl("CHPT", unique_stations, ignore.case = T), "Chargepoint",
+  mutate(charger_type = ifelse(grepl("CHPT", station_name, ignore.case = T), "Chargepoint",
                                charger_type)) %>% 
   mutate(charger_type = ifelse(grepl("Nissan|BMW", station_name, ignore.case = T), "Car dealer",
                                charger_type)) %>% 
    mutate(charger_type = ifelse(grepl("University", station_name, ignore.case = T), "University",
                                charger_type)) %>% 
-  mutate(charger_type = ifelse(grepl("Marriott|Loews|Duke|Aertson", station_name, ignore.case = T), "Hotel",
+  mutate(charger_type = ifelse(grepl("Marriott|Loews|Duke|Aertson", 
+                                     station_name, ignore.case = T), "Hotel",
                                charger_type)) %>% 
   mutate(charger_type = ifelse(grepl("The Shay|Windsor Tower|Rivertop",
                                      station_name, ignore.case = T), "Apartment",
                                charger_type))  %>%
-  mutate(charger_type = ifelse(grepl("Tesla", station_name, ignore.case = T), "Tesla", charger_type)) 
+  mutate(charger_type = ifelse(grepl("Tesla", station_name, ignore.case = T),
+                               "Tesla", charger_type)) %>% 
+  mutate(charger_type = ifelse(grepl("Vanderbilt Medical|TCMC B|TriStar Southern",
+                                     station_name, ignore.case = T),
+                               "Hospital", charger_type)) %>% 
+  mutate(charger_type = ifelse(grepl("WHOLEFOODS|TARGET CORP|Publix",
+                                     station_name, ignore.case = T),
+                               "Grocery store", charger_type)) 
   
+alt_fuel_stations_davidson %>% 
+   mutate(len_name = str_length(charger_type)) %>%
+  count(len_name)
+
+alt_fuel_stations_davidson <-
+  alt_fuel_stations_davidson %>% 
+  mutate(len_name = str_length(charger_type)) %>%
+  filter(str_length(charger_type) < 12)
 
 metro <- 
   alt_fuel_stations_davidson %>% 
-  filter(!(charger_type %in% c("Metro", "Premier Parking", "Chargepoint", 
-                               "Car dealer", "Tesla", "Hotel", "University",
-                               "Apartment", "BNA")))
+  filter(!(charger_type %in% c("Metro", "Premier Parking", "Chargepoint", "Car dealer", "Tesla",
+                               "Hotel", "University","Apartment", "BNA", "Grocery store",
+                               "Hospital")))
 ```
 
 
@@ -138,30 +155,10 @@ library(tigris)
 
 cb_tn <- core_based_statistical_areas(year = 2018, cb = TRUE)
 davidson.metro <- filter(cb_tn, grepl("Davidson", NAME))
-
+  
 # If you want to use predefined palettes in the RColorBrewer package:
 # Call RColorBrewer::display.brewer.all() to see all possible palettes
-pal <- colorFactor(palette = 'Dark2', domain = metro$charger_type)
-
-davidson_chargers_leaflet <- 
-  leaflet(davidson.metro) %>% 
-    addTiles() %>% 
-    addCircleMarkers(data = metro,
-                     lat = ~latitude, lng = ~longitude,  color = ~pal(charger_type),
-                     popup = paste("Name:", metro$charger_type,
-                                   "<br>",
-                                   "Addr:", metro$street_address,
-                                   "<br>",
-                                   "City:", metro$city, 
-                                   "<br>",
-                                   "Zip:", metro$zip
-                                   )
-                     )
-
-alt_fuel_stations_davidson <-
-  alt_fuel_stations_davidson %>% 
-  filter(str_length(charger_type) < 8)
-
+pal <- colorFactor(palette = 'Set3', domain = alt_fuel_stations_davidson$charger_type)
 
 davidson_chargers_leaflet <- 
   leaflet(davidson.metro) %>% 
@@ -169,6 +166,7 @@ davidson_chargers_leaflet <-
     addCircleMarkers(data = alt_fuel_stations_davidson,
                      lat = ~latitude, lng = ~longitude,  color = ~pal(charger_type),
                      popup = paste(alt_fuel_stations_davidson$unique_stations, "<br>",
+                                   alt_fuel_stations_davidson$charger_type, "<br>",
                                    alt_fuel_stations_davidson$street_address, "<br>",
                                    alt_fuel_stations_davidson$city, " ",
                                    alt_fuel_stations_davidson$zip)
