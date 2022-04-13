@@ -52,11 +52,12 @@ alt_fuel_stations_davidson <-
   unique() %>% 
   mutate(charger_type = ifelse(grepl("METRO", station_name, ignore.case = T),
                                "Metro", station_name)) %>% 
-  mutate(charger_type = ifelse(grepl("PREMIER|Music City Center", station_name, ignore.case = T), 
+  mutate(charger_type = ifelse(grepl("PREMIER|Music City Center|PP 5TH&BROAD|	
+ENDEAVOR", station_name, ignore.case = T), 
                                "Paid Parking", charger_type)) %>% 
   mutate(charger_type = ifelse(grepl("BNA|Terminal Dr", street_address, ignore.case = T), 
                                "Airport", charger_type)) %>% 
-  mutate(charger_type = ifelse(grepl("BNA|AIRPORT", station_name, ignore.case = T), "Airport",
+  mutate(charger_type = ifelse(grepl("BNA|AIRPORT|MNAA PARK GAR", station_name, ignore.case = T), "Airport",
                                charger_type)) %>% 
   mutate(charger_type = ifelse(grepl("CHPT", station_name, ignore.case = T), "Chargepoint",
                                charger_type)) %>% 
@@ -67,12 +68,12 @@ alt_fuel_stations_davidson <-
   mutate(charger_type = ifelse(grepl("Marriott|Loews|Duke|Aertson", 
                                      station_name, ignore.case = T), "Hotel",
                                charger_type)) %>% 
-  mutate(charger_type = ifelse(grepl("Shay|Windsor|Rivertop|Apex|oneC1T|Eleven North",
+  mutate(charger_type = ifelse(grepl("Shay|Windsor|Rivertop|Apex|oneC1T|Eleven North|Taylor Place",
                                      station_name, ignore.case = T), "Apartment complex",
                                charger_type))  %>%
   mutate(charger_type = ifelse(grepl("Tesla", station_name, ignore.case = T),
                                "Tesla", charger_type)) %>% 
-  mutate(charger_type = ifelse(grepl("Vanderbilt|TCMC|TriStar",
+  mutate(charger_type = ifelse(grepl("Vanderbilt|TCMC|TriStar|NASHVILLE VAMC",
                                      station_name, ignore.case = T),
                                "Hospital", charger_type)) %>% 
   mutate(charger_type = ifelse(grepl("WHOLEFOODS|TARGET|Publix|Mapco",
