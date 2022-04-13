@@ -52,8 +52,8 @@ alt_fuel_stations_davidson <-
   unique() %>% 
   mutate(charger_type = ifelse(grepl("METRO", station_name, ignore.case = T),
                                "Metro", station_name)) %>% 
-  mutate(charger_type = ifelse(grepl("PREMIER", station_name, ignore.case = T), 
-                               "Premier Parking", charger_type)) %>% 
+  mutate(charger_type = ifelse(grepl("PREMIER|Music City Center", station_name, ignore.case = T), 
+                               "Paid Parking", charger_type)) %>% 
   mutate(charger_type = ifelse(grepl("BNA|Terminal Dr", street_address, ignore.case = T), 
                                "Airport", charger_type)) %>% 
   mutate(charger_type = ifelse(grepl("BNA|AIRPORT", station_name, ignore.case = T), "Airport",
@@ -78,7 +78,7 @@ alt_fuel_stations_davidson <-
   mutate(charger_type = ifelse(grepl("WHOLEFOODS|TARGET|Publix|Mapco",
                                      station_name, ignore.case = T),
                                "Grocery store", charger_type)) %>%
-  mutate(charger_type = ifelse(grepl("Willowbrook", station_name, ignore.case = T),
+  mutate(charger_type = ifelse(grepl("Willowbrook|BELCOURT", station_name, ignore.case = T),
                                 "Retail space", charger_type)) %>%
   mutate(charger_type = ifelse(grepl("State Park", station_name, ignore.case = T),
                                 "State Park", charger_type)) %>%
@@ -87,14 +87,14 @@ alt_fuel_stations_davidson <-
   
 fix_names <- 
   alt_fuel_stations_davidson %>% 
-  filter(!(charger_type %in% c("Metro", "Premier Parking", "Chargepoint", "Car dealer", "Tesla",
+  filter(!(charger_type %in% c("Metro", "Paid Parking", "Chargepoint", "Car dealer", "Tesla",
                                "Hotel", "University","Apartment", "Airport", "Grocery store",
                                "Hospital", "Apartment complex", "Retail space", "State Park"))) %>%
   filter(len_name > 10)
 
 ev_stations_davidson_ <-
   alt_fuel_stations_davidson %>% 
-  filter(charger_type %in% c("Metro", "Premier Parking", "Chargepoint", "Car dealer", "Tesla",
+  filter(charger_type %in% c("Metro", "Paid Parking", "Chargepoint", "Car dealer", "Tesla",
                                "Hotel", "University","Apartment", "Airport", "Grocery store",
                                "Hospital", "Apartment complex", "Retail space"))
   
