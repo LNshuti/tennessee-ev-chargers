@@ -121,11 +121,16 @@ tn_ev_charger_locations <-
   theme(plot.caption = element_text(size = 12, hjust = 0),
         axis.title.x=element_blank(),
         axis.title.y=element_blank(), 
-        plot.caption.position =  "plot"
+        plot.caption.position =  "plot",
+        panel.background = element_blank()
   ) 
-  
+
 ggsave(tn_ev_charger_locations,
        filename = paste0(repo_path, "/output/tn_ev_charger_locations_income_2019.png"),
+       width = 8, height = 4)
+
+ggsave(tn_ev_charger_locations,
+       filename ="/tennessee-chargers-shiny/output/tn_ev_charger_locations_income_2019.png",
        width = 8, height = 4)
 
 ```
