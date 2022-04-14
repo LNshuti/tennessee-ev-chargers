@@ -84,7 +84,7 @@ ev_stations_davidson_fin <-
   ungroup() %>%
   mutate(charger_type = as.factor(charger_type))
 
-write_rds(ev_stations_davidson_, 
+write_rds(ev_stations_davidson_fin, 
           paste0(repo_path, "/data/shiny/ev_stations_davidson_.rds"),
           "xz", compression = 9L)
 ```
