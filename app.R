@@ -21,18 +21,17 @@ ui <- fluidPage(leafletOutput("mymap"), p())
         
 server <- function(input, output, session) { 
 
-output$mymap <- renderLeaflet({ 
-  leaflet(davidson.metro) %>% 
-    addTiles() %>% 
-    addMarkers(data = ev_stations_davidson_,
-               ~longitude, ~latitude, popup = ~htmlEscape(charger_type),
-               labelOptions = labelOptions(noHide = T, textOnly = FALSE)
-               )
-                                     
-                     }
-    )
+  output$mymap <- renderLeaflet({ 
+    leaflet(davidson.metro) %>% 
+      addTiles() %>% 
+      addMarkers(data = ev_stations_davidson_,
+                 ~longitude, ~latitude, popup = ~htmlEscape(charger_type),
+                 labelOptions = labelOptions(noHide = T, textOnly = FALSE)
+                 )
+                                       
+                       }
+      )
   
 }
-                 
           
 shinyApp(ui, server) 
