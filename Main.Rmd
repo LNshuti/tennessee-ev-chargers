@@ -114,7 +114,7 @@ tn_ev_charger_locations <-
   tn_income_plt + 
   geom_point(data = alt_fuel_stations_tn, aes(x=longitude,y=latitude)) + 
   labs(title = "",
-       caption = "Data source: \n2019 Median Household Income Data from the American Community Survey. census.gov/programs-surveys/acs/. \nEV coordinates obtained using the National Renewable Energy Lab API. developer.nrel.gov. \nEach dot represents a terminal of one or more EV chargers") +
+       caption = "Data source: \n2019 Median Household Income Data from the American Community Survey. census.gov/programs-surveys/acs/. \nEV coordinates obtained using the National Renewable Energy Lab API. developer.nrel.gov. \nEach dot represents a terminal of one or more EV chargers. \nMore details: https://github.com/LNshuti/tennessee-chargers-shiny") +
   labs(fill = "Median Income") +
   theme_bw() +
   theme_tufte_revised() +
@@ -130,7 +130,6 @@ ggsave(tn_ev_charger_locations,
        width = 8, height = 4)
 
 ggsave(tn_ev_charger_locations,
-       filename ="/tennessee-chargers-shiny/output/tn_ev_charger_locations_income_2019.png",
+       filename ="tennessee-chargers-shiny/output/tn_ev_charger_locations_income_2019.png",
        width = 8, height = 4)
-
 ```
