@@ -44,76 +44,44 @@ alt_fuel_stations_tn <-
   filter(state == "TN" & fuel_type_code == "ELEC") %>%
   select(station_name, street_address, city, zip, cards_accepted, latitude, longitude)
 
-alt_fuel_stations_davidson <- 
-  alt_fuel_stations_tn %>%
-  filter(city == "Nashville")  %>%
+ev_stations_davidson_ <- 
+  alt_fuel_stations_tn %>% filter(city == "Nashville")  %>%
   mutate(unique_stations = stringr::word(station_name, 1,2, sep=" ")) %>% 
   select(unique_stations,station_name, latitude, longitude,street_address, city, zip) %>%
   unique() %>% 
-  mutate(charger_type = ifelse(grepl("METRO", station_name, ignore.case = T),
-                               "Metro", station_name)) %>% 
-  mutate(charger_type = ifelse(grepl("PREMIER|Music City|5TH&BROAD|ENDEAVOR",
-                                     station_name, ignore.case = T), 
-                               "Paid Parking", charger_type)) %>%
-  mutate(charger_type = ifelse(grepl("ENDEAVOR|TVA DEMO", charger_type, ignore.case = T), 
-                               "Paid Parking", charger_type)) %>%
-  mutate(charger_type = ifelse(grepl("BNA|Terminal Dr", street_address, ignore.case = T), 
-                               "Airport", charger_type)) %>% 
-  mutate(charger_type = ifelse(grepl("BNA|AIRPORT|MNAA", station_name, ignore.case = T), "Airport",
-                               charger_type)) %>%
-  mutate(charger_type = ifelse(grepl("BNA|AIRPORT|MNAA", charger_type, ignore.case = T), "Airport",
-                               charger_type)) %>%
-  mutate(charger_type = ifelse(grepl("CHPT", station_name, ignore.case = T), "Chargepoint",
-                               charger_type)) %>% 
-  mutate(charger_type = ifelse(grepl("Nissan|BMW", station_name, ignore.case = T), "Car dealer",
-                               charger_type)) %>% 
-  mutate(charger_type = ifelse(grepl("University", station_name, ignore.case = T), "University",
-                               charger_type)) %>% 
-  mutate(charger_type = ifelse(grepl("Marriott|Loews|Duke|Aertson", 
-                                     station_name, ignore.case = T), "Hotel",
-                               charger_type)) %>% 
+  mutate(charger_type = ifelse(grepl("METRO", station_name, ignore.case = T), "Metro", station_name)) %>% 
+  mutate(charger_type = ifelse(grepl("PREMIER|Music City|5TH&BROAD|ENDEAVOR", 
+                                     station_name, ignore.case = T), "Paid Parking", charger_type)) %>%
+  mutate(charger_type = ifelse(grepl("ENDEAVOR|TVA DEMO", charger_type, ignore.case = T), "Paid Parking", charger_type)) %>%
+  mutate(charger_type = ifelse(grepl("BNA|Terminal Dr", street_address, ignore.case = T), "Airport", charger_type)) %>% 
+  mutate(charger_type = ifelse(grepl("BNA|AIRPORT|MNAA", station_name, ignore.case = T), "Airport", charger_type)) %>%
+  mutate(charger_type = ifelse(grepl("BNA|AIRPORT|MNAA", charger_type, ignore.case = T), "Airport", charger_type)) %>%
+  mutate(charger_type = ifelse(grepl("Nissan|BMW", station_name, ignore.case = T), "Car dealer", charger_type)) %>% 
   mutate(charger_type = ifelse(grepl("Shay|Windsor|Rivertop|Apex|oneC1T|Eleven North|Taylor Place|LAKESBELLEVUE",
-                                     station_name, ignore.case = T), "Apartment complex",
-                               charger_type))  %>%
-  mutate(charger_type = ifelse(grepl("Tesla", station_name, ignore.case = T),
-                               "Tesla", charger_type)) %>% 
-  mutate(charger_type = ifelse(grepl("Vanderbilt|TCMC|TriStar|NASHVILLE VAMC",
-                                     station_name, ignore.case = T),
+                                     station_name, ignore.case = T), "Apartment complex",charger_type))  %>%
+  mutate(charger_type = ifelse(grepl("Tesla", station_name, ignore.case = T), "Tesla", charger_type)) %>% 
+  mutate(charger_type = ifelse(grepl("Vanderbilt|TCMC|TriStar|NASHVILLE VAMC", station_name, ignore.case = T),
                                "Hospital", charger_type)) %>% 
-  mutate(charger_type = ifelse(grepl("WHOLEFOODS|TARGET|Publix|Mapco",
-                                     station_name, ignore.case = T),
+  mutate(charger_type = ifelse(grepl("WHOLEFOODS|TARGET|Publix|Mapco", station_name, ignore.case = T),
                                "Grocery store", charger_type)) %>%
-  mutate(charger_type = ifelse(grepl("Willowbrook|BELCOURT", station_name, ignore.case = T),
-                                "Retail space", charger_type)) %>%
-  mutate(charger_type = ifelse(grepl("State Park|YMCA", station_name, ignore.case = T),
-                                "StatePark or YMCA", charger_type)) %>%
-  mutate(charger_type = str_trim(charger_type)) %>%
-  mutate(len_name = str_length(charger_type)) 
-```
-  
-  
-```{r}
-fix_names <- 
-  alt_fuel_stations_davidson %>% 
-  filter(!(charger_type %in% c("Metro", "Paid Parking", "Chargepoint", "Car dealer", "Tesla",
-                               "Hotel", "University","Apartment", "Airport", "Grocery store",
-                               "Hospital", "Apartment complex", "Retail space", "StatePark or YMCA")))
-
-ev_stations_davidson_ <-
-  alt_fuel_stations_davidson %>% 
+  mutate(charger_type = str_trim(charger_type)) %>% 
+  mutate(charger_type = ifelse(charger_type %in% c("Metro", "Paid Parking", "Chargepoint", "Car dealer",
+                                                   "Tesla", "Hotel", "University","Apartment", "Airport",
+                                                   "Grocery store","Hospital", "Apartment complex",
+                                                   "Retail space", "StatePark or YMCA"), 
+                               charger_type, "Other")) %>%
+  mutate(len_name = str_length(charger_type)) %>%
   select(-city, -len_name) %>%
-  filter(charger_type %in% c("Metro", "Paid Parking", "Chargepoint", "Car dealer", "Tesla",
-                               "Hotel", "University","Apartment", "Airport", "Grocery store",
-                               "Hospital", "Apartment complex", "Retail space", "StatePark or YMCA")) %>%
   group_by(street_address, unique_stations, zip, charger_type) %>%
   filter(row_number()==1) %>%
-  ungroup()
+  ungroup() %>%
+  mutate(charger_type = as.factor(charger_type))
 
 write_rds(ev_stations_davidson_, 
           paste0(repo_path, "/data/shiny/ev_stations_davidson_.rds"),
           "xz", compression = 9L)
 ```
-
+  
 
 ```{r, warning = FALSE, message = FALSE}
 # Counties
@@ -153,63 +121,24 @@ tn_ev_charger_locations <-
 ```
 
 
-
 ```{r}
 library(tigris)
+library(leaflegend)
+library(htmltools)
+library(RColorBrewer)
 
 cb_tn <- core_based_statistical_areas(year = 2018, cb = TRUE)
 davidson.metro <- filter(cb_tn, grepl("Davidson", NAME))
   
-# If you want to use predefined palettes in the RColorBrewer package:
-# Call RColorBrewer::display.brewer.all() to see all possible palettes
-pal <- colorFactor(palette = 'Set3', domain = ev_stations_davidson_$charger_type)
+n <- 9
+qual_col_pals = brewer.pal.info[brewer.pal.info$category == 'qual',]
+col_vector = unlist(mapply(brewer.pal, qual_col_pals$maxcolors, rownames(qual_col_pals)))
+
+pal <- colorFactor(palette = col_vector, levels = ev_stations_davidson_$charger_type)
 
 davidson_chargers_leaflet <- 
   leaflet(davidson.metro) %>% 
-    addTiles() %>% 
-    addCircleMarkers(data = ev_stations_davidson_,
-                     lat = ~latitude, lng = ~longitude,  color = ~pal(charger_type),
-                     popup = paste(ev_stations_davidson_$unique_stations, "<br>",
-                                   ev_stations_davidson_$charger_type, "<br>",
-                                   ev_stations_davidson_$street_address, "<br>",
-                                   ev_stations_davidson_$city, " ",
-                                   ev_stations_davidson_$zip)
-                     ) %>%
-  addLegend(data = ev_stations_davidson_, 
-            pal = pal, values = ~charger_type,group = "circles",
-            position = "bottomleft" ) %>%
-  addLayersControl(overlayGroups = c("circles"))
+  addTiles() %>% 
+  addMarkers(data = ev_stations_davidson_, ~longitude, ~latitude, popup = ~htmlEscape(charger_type),
+             labelOptions = labelOptions(noHide = T, textOnly = FALSE))
 ```
-
-
-```{r}
-library(shiny)
-library(leaflet)
-
-r_colors <- rgb(t(col2rgb(colors()) / 255))
-names(r_colors) <- colors()
-
-ui <- fluidPage(
-  leafletOutput("mymap"),
-  p(),
-  actionButton("recalc", "New points")
-)
-
-server <- function(input, output, session) {
-
-  points <- eventReactive(input$recalc, {
-    cbind(rnorm(40) * 2 + 13, rnorm(40) + 48)
-  }, ignoreNULL = FALSE)
-
-  output$mymap <- renderLeaflet({
-    leaflet() %>%
-      addProviderTiles(providers$Stamen.TonerLite,
-        options = providerTileOptions(noWrap = TRUE)
-      ) %>%
-      addMarkers(data = points())
-  })
-}
-
-shinyApp(ui, server)
-```
-
