@@ -1,0 +1,10 @@
+name: tennessee-chargers
+channels:
+  - conda-forge
+  - pytorch
+dependencies:
+  - python=3.9
+  - pip
+  - pip:
+    - streamlit
+    - folium

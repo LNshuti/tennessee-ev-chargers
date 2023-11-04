@@ -10,32 +10,31 @@ knitr::opts_chunk$set(warning = FALSE)
 knitr::opts_chunk$set(message = FALSE)
 
 repo_path <- "tennessee-ev-chargers"
-suppressWarnings(suppressMessages(source(paste0(repo_path, "/manifest.R"))))
-suppressWarnings(suppressMessages(source(paste0(repo_path, "/move-ak-hi.R"))))
+suppressWarnings(suppressMessages(source(paste0(repo_path, "/R/manifest.R"))))
+suppressWarnings(suppressMessages(source(paste0(repo_path, "/R/move-ak-hi.R"))))
 ```
 
 # Import income data for TN and location data for EV chargers.
 ```{r, warning = FALSE, message = FALSE}
 tn_wide <- 
-  read_csv(paste0(repo_path, "/data/tn_medianincome_2019.csv")) %>% 
+  read_csv(paste0("data/tn_medianincome_2019.csv")) %>% 
   janitor::clean_names() %>% 
   mutate(geoid = paste0(geoid))
 
 # Downloaded from https://www.huduser.gov/portal/datasets/usps_crosswalk.html
 zip_tract_xwalk <- 
-  readxl::read_xlsx(paste0(repo_path, "/data/ZIP_TRACT_122019.xlsx")) %>%
+  readxl::read_xlsx(paste0("data/ZIP_TRACT_122019.xlsx")) %>%
   janitor::clean_names() %>% 
   rename(geoid = tract)
 
 sf_county <-
-  read_sf(paste0(repo_path,
-                 "/data/county/01_county-shape-file.shp")) %>% 
+  read_sf(paste0("data/county/01_county-shape-file.shp")) %>% 
   st_transform(crs = 4326) %>% 
   filter(statefp == "47") %>% 
   left_join(tn_wide, by = "geoid")
 
 alt_fuel_stations_tn <- 
-  read_csv("tn-chargers/data/alt_fuel_stations.csv") %>%
+  read_csv("data/alt_fuel_stations.csv") %>%
   janitor::clean_names() %>%
   filter(state == "TN" & fuel_type_code == "ELEC") %>%
   select(station_name, street_address, city, zip, cards_accepted, latitude, longitude)
@@ -75,20 +74,30 @@ ev_stations_davidson_outlets <-
   dplyr::summarise(num_outlets = n()) %>%
   ungroup()
 
-ev_stations_davidson_fin <- 
-  ev_stations_davidson_ %>% 
-  dplyr::inner_join(ev_stations_davidson_outlets,
-            by = c("street_address","unique_stations","zip","charger_type")) %>%
-  group_by(street_address, unique_stations, zip, charger_type) %>%
-  filter(row_number()==1) %>%
-  ungroup() %>%
-  mutate(charger_type = as.factor(charger_type))
+# ev_stations_davidson_fin <- 
+#   ev_stations_davidson_ %>% 
+#   dplyr::inner_join(ev_stations_davidson_outlets,
+#             by = c("street_address","unique_stations","zip","charger_type")) %>%
+#   group_by(street_address, unique_stations, zip, charger_type) %>%
+#   filter(row_number()==1) %>%
+#   ungroup() %>%
+#   mutate(charger_type = as.factor(charger_type))
 
-write_rds(ev_stations_davidson_fin, 
-          paste0(repo_path, "/data/shiny/ev_stations_davidson_.rds"),
-          "xz", compression = 9L)
+# write_rds(ev_stations_davidson_fin, 
+#           paste0(repo_path, "/data/shiny/ev_stations_davidson_.rds"),
+#           "xz", compression = 9L)
 ```
   
+
+```{r}
+ 
+ggplot(data = sf_county, mapping = aes(x = aland, y= medinc_m)) +
+  geom_point() + 
+  geom_smooth(method="loess") + 
+  scale_y_log10(labels = scales::dollar)
+  
+```
+
 
 ```{r, warning = FALSE, message = FALSE}
 # Counties
@@ -105,31 +114,34 @@ tn_income_plt <-
   theme_bw() +
   theme_tufte_revised() 
   
+tn_income_plt
 
-ggsave(tn_income_plt,
-       filename = paste0(repo_path, "/output/tn_income_2019.png"),
-       width = 8, height = 4)
 
-tn_ev_charger_locations <-
-  tn_income_plt + 
-  geom_point(data = alt_fuel_stations_tn, aes(x=longitude,y=latitude)) + 
-  labs(title = "",
-       caption = "Data source: \n2019 Median Household Income Data from the American Community Survey. census.gov/programs-surveys/acs/. \nEV coordinates obtained using the National Renewable Energy Lab API. developer.nrel.gov. \nEach dot represents a terminal of one or more EV chargers. \nMore details: https://github.com/LNshuti/tennessee-chargers-shiny") +
-  labs(fill = "Median Income") +
-  theme_bw() +
-  theme_tufte_revised() +
-  theme(plot.caption = element_text(size = 12, hjust = 0),
-        axis.title.x=element_blank(),
-        axis.title.y=element_blank(), 
-        plot.caption.position =  "plot",
-        panel.background = element_blank()
-  ) 
 
-ggsave(tn_ev_charger_locations,
-       filename = paste0(repo_path, "/output/tn_ev_charger_locations_income_2019.png"),
-       width = 8, height = 4)
+# ggsave(tn_income_plt,
+#        filename = paste0(repo_path, "/output/tn_income_2019.png"),
+#        width = 8, height = 4)
 
-ggsave(tn_ev_charger_locations,
-       filename ="tennessee-chargers-shiny/output/tn_ev_charger_locations_income_2019.png",
-       width = 8, height = 4)
+# tn_ev_charger_locations <-
+#   tn_income_plt + 
+#   geom_point(data = alt_fuel_stations_tn, aes(x=longitude,y=latitude)) + 
+#   labs(title = "",
+#        caption = "Data source: \n2019 Median Household Income Data from the American Community Survey. census.gov/programs-surveys/acs/. \nEV coordinates obtained using the National Renewable Energy Lab API. developer.nrel.gov. \nEach dot represents a terminal of one or more EV chargers. \nMore details: https://github.com/LNshuti/tennessee-chargers-shiny") +
+#   labs(fill = "Median Income") +
+#   theme_bw() +
+#   theme_tufte_revised() +
+#   theme(plot.caption = element_text(size = 12, hjust = 0),
+#         axis.title.x=element_blank(),
+#         axis.title.y=element_blank(), 
+#         plot.caption.position =  "plot",
+#         panel.background = element_blank()
+#   ) 
+
+# ggsave(tn_ev_charger_locations,
+#        filename = paste0(repo_path, "/output/tn_ev_charger_locations_income_2019.png"),
+#        width = 8, height = 4)
+
+# ggsave(tn_ev_charger_locations,
+#        filename ="tennessee-chargers-shiny/output/tn_ev_charger_locations_income_2019.png",
+#        width = 8, height = 4)
 ```
