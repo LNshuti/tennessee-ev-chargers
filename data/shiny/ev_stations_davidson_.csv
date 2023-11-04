@@ -1,0 +1,99 @@
+"","unique_stations","station_name","latitude","longitude","street_address","zip","charger_type","num_outlets"
+"1","METRO NASHVILLE","METRO NASHVILLE FULTON GARAGE 1",36.153492,-86.76732,"800 2nd Avenue South","37210","Metro",2
+"2","Action Nissan","Action Nissan",36.110606,-86.743585,"307 Thompson Ln","37211","Car dealer",1
+"3","Downtown Nashville","Downtown Nashville Nissan",36.191053,-86.793132,"25 Vantage Way","37228","Car dealer",1
+"4","Vanderbilt University","Vanderbilt University - Surface Lot",36.148816,-86.799577,"124 21st Ave S","37212","Hospital",1
+"5","BMW NASHVILLE","BMW NASHVILLE STATION 01",36.104589,-86.761033,"4013 Armory Oaks Dr","37204","Car dealer",1
+"6","METRO NASHVILLE","METRO NASHVILLE MIDTOWN HILLS",36.137258,-86.788609,"1441 12th Ave S","37203","Metro",1
+"7","METRO NASHVILLE","METRO NASHVILLE LENTZ 3",36.15557,-86.813431,"2500 Charlotte Ave","37203","Metro",3
+"8","METRO NASHVILLE","METRO NASHVILLE FULTON GARAGE 5",36.153934,-86.767472,"1st Ave S","37210","Metro",1
+"9","METRO NASHVILLE","METRO NASHVILLE DOUGLAS HS 2",36.176117,-86.762044,"621 Howerton St","37206","Metro",1
+"10","GARAGE RAMP","GARAGE RAMP PINNACLE 1",36.160453,-86.774698,"150 3rd Ave S 150 3rd Ave South","37201","Other",2
+"11","Publix #1211","Publix #1211",36.12718,-86.84697,"4324 Harding Pike","37205","Grocery store",1
+"12","METRO NASHVILLE","METRO NASHVILLE MNFD STATION 19",36.156447,-86.815539,"524b 26th Ave N","37209","Metro",1
+"13","METRO NASHVILLE","METRO NASHVILLE BELLEVUE LIB",36.06949,-86.936094,"720 Baugh Rd","37221","Metro",1
+"14","METRO NASHVILLE","METRO NASHVILLE NFD 20",36.091731,-86.826441,"1630 Harding Pl","37215","Metro",1
+"15","LAKESBELLEVUE LAKESBELLEVUE","LAKESBELLEVUE LAKESBELLEVUE",36.079471,-86.908649,"200 Erin Ln","37221","Apartment complex",1
+"16","GERMANTOWN1 IMT","GERMANTOWN1 IMT GERMANTOWN2",36.17576,-86.784768,"1100 3rd Ave N","37208","Other",2
+"17","BNA EXPRESS","BNA EXPRESS STATION 01",36.110741,-86.672007,"115 Knapp Blvd","37217","Airport",2
+"18","Marriott Nashville","Marriott Nashville Airport",36.146941,-86.692287,"600 Marriott Drive","37214","Airport",1
+"19","Loews Vanderbilt","Loews Vanderbilt Hotel",36.150544,-86.802403,"2100 West End Avenue","37203","Hospital",1
+"20","Midtown Cafe","Midtown Cafe",36.151923,-86.79686,"102 19th Avenue S","37203","Other",1
+"21","Lipscomb University","Lipscomb University",36.105597,-86.798058,"One University park Drive","37204","Other",1
+"22","TERM GARAGE","TERM GARAGE 2 MNAA PARK GA 2",36.130497,-86.667155,"Nashville","37214","Airport",3
+"23","Hilton Nashville","Hilton Nashville Downtown - Tesla Destination",36.159962,-86.776722,"121 4th Ave S","37201","Tesla",1
+"24","Urban Cookhouse","Urban Cookhouse Nashville - Tesla Destination",36.150317,-86.796647,"1907 Broadway","37203","Tesla",1
+"25","The Hermitage","The Hermitage Hotel - Tesla Destination",36.163737,-86.782516,"231 6th Ave N","37219","Tesla",1
+"26","Gaylord Opryland","Gaylord Opryland Resort & Convention Center - Tesla Destination",36.211385,-86.695925,"2800 Opryland Dr","37214","Tesla",1
+"27","Thompson Nashville","Thompson Nashville - Tesla Destination",36.152342,-86.78409,"401 11th Ave S","37203","Tesla",1
+"28","Hotel Preston","Hotel Preston - Tesla Destination",36.141968,-86.70126,"733 Briley Pkwy","37217","Tesla",1
+"29","Fairfield Inn","Fairfield Inn & Suites Nashville Downtown/The Gulch - Tesla Destination",36.149966,-86.781738,"901 Division St","37203","Tesla",1
+"30","METRO NASHVILLE","METRO NASHVILLE 2",36.142179,-86.739249,"610 Murfreesboro Pike","37210","Metro",5
+"31","METRO NASHVILLE","METRO NASHVILLE WEST PRECINCT",36.151278,-86.855062,"5500 Charlotte Pike","37209","Metro",1
+"32","METRO NASHVILLE","METRO NASHVILLE SE LIBRARY 2",36.052522,-86.656983,"5264 Hickory Hollow Pl","37013","Metro",2
+"33","METRO NASHVILLE","METRO NASHVILLE HCH GARAGE 2",36.167275,-86.777527,"101 James Robertson Pkwy","37201","Metro",2
+"34","METRO NASHVILLE","METRO NASHVILLE FIRE STATION 33",36.067571,-86.630697,"2501 Forest View Dr","37013","Metro",1
+"35","Fairfield Inn","Fairfield Inn & Suites by Marriott Nashville - Tesla Destination",36.188914,-86.797442,"100 French Landing Dr","37228","Tesla",1
+"36","TERM GARAGE","TERM GARAGE 2 MNAA FAST DC 4",36.131522,-86.669243,"1 Terminal Dr","37214","Airport",4
+"37","METRO NASHVILLE","METRO NASHVILLE BELLEVUE ICE 4",36.081158,-86.951253,"7634 US-70S","37221","Metro",1
+"38","METRO NASHVILLE","METRO NASHVILLE BELLEVUE ICE 3",36.080881,-86.950813,"7640 US-70S","37221","Metro",1
+"39","Dalton Agency","Dalton Agency",36.176454992603,-86.754779240475,"926 Main Street
+Suite A","37206","Other",1
+"40","Eleven North","Eleven North",36.1597061,-86.7885981,"210 11th Avenue N","37203","Apartment complex",1
+"41","TriStar Southern","TriStar Southern Hills Medical Center",36.0767,-86.7212,"391 Wallace Road","37211","Hospital",1
+"42","Willowbrook Commons","Willowbrook Commons - Tesla Supercharger",36.110515,-86.723904,"61 East Thompson Lane","37211","Tesla",1
+"43","Publix #1680","Publix #1680",36.16331,-86.789734,"1010 Dr Martin L King Jr Blvd","37203","Grocery store",1
+"44","TVA DEMO","TVA DEMO 1 DEMO",36.150316,-86.685079,"26 Century Blvd","37214","Paid Parking",1
+"45","HAMPTON STATION","HAMPTON STATION 1",36.148162,-86.665805,"2825 Elm Hill Pike","37214","Other",1
+"46","TCMC B","TCMC B GARAGE CENTENNIAL B3",36.152315,-86.807851,"311 23rd Ave N","37203","Hospital",8
+"47","NASHVILLE VAMC","NASHVILLE VAMC NASH 1",36.140718,-86.803386,"1310 24th Ave S","37212","Hospital",4
+"48","WFM -","WFM - SOUTH WHOLEFOODS NAS1",36.156702,-86.788385,"1210 Broadway","37203","Grocery store",2
+"49","STOCKYARDS STOCKYARDS","STOCKYARDS STOCKYARDS 1",36.171467,-86.7815,"801 2nd Ave N","37201","Other",1
+"50","Rivertop Apartments","Rivertop Apartments",36.130606,-86.913108,"5800 River Rd","37209","Apartment complex",1
+"51","METRO NASHVILLE","METRO NASHVILLE NFD STATION 37",36.072424,-86.933537,"656 Colice Jeanne Rd","37221","Metro",1
+"52",NA,"NOGAS",36.115736,-86.752546,"2612 Winford Ave","37211","Other",1
+"53","IMT 8","IMT 8 SOUTH STATION 1",36.126212,-86.77796,"2405 8th Ave S","37204","Other",2
+"54","TERMINAL 1","TERMINAL 1 P2 STATION 3",36.133227,-86.666937,"Terminal Garage 1 140 BNA Park Dr","37214","Airport",9
+"55","Windsor Tower","Windsor Tower Condos",36.127888,-86.841022,"4215 Harding PIke","37205","Apartment complex",1
+"56","Hutton Hotel","Hutton Hotel - Tesla Destination",36.152907,-86.797009,"1808 W End Ave","37203","Tesla",1
+"57","ENDEAVOR REG","ENDEAVOR REG DEMONBREUN 1",36.154393,-86.78763,"1216 Demonbreun St","37203","Paid Parking",2
+"58","ENDEAVOR REG","ENDEAVOR REG MCGAVOCK 1",36.154798,-86.787408,"1213 McGavock St","37203","Paid Parking",1
+"59","PP 5TH&BROAD","PP 5TH&BROAD 5+B_RETAIL_B1_1",36.16067,-86.77889,"550 Broadway","37203","Paid Parking",8
+"60","PP 5TH&BROAD","PP 5TH&BROAD 5+B_OFFICE_05_1",36.16119,-86.77919,"134 5th Ave N","37219","Paid Parking",7
+"61","PP 5TH&BROAD","PP 5TH&BROAD 5+B_RESI02_9",36.160225,-86.78049,"612 Broadway","37203","Paid Parking",6
+"62","PP 5TH&BROAD","PP 5TH&BROAD 5+B_RESI02_8",36.160645,-86.78044,"118 7th Ave N","37203","Paid Parking",2
+"63","PP 5TH&BROAD","PP 5TH&BROAD 5+B_RESI02_3",36.160923,-86.78056,"620 Commerce St","37203","Paid Parking",1
+"64","ENDEAVOR REG","ENDEAVOR REG BROADWAY 1",36.154701,-86.789639,"1501 Broadway","37203","Paid Parking",1
+"65","METRO NASHVILLE","METRO NASHVILLE FULTON GARAGE 3",36.153683,-86.767461,"800 2nd Ave S","37210","Metro",3
+"66","METRO NASHVILLE","METRO NASHVILLE BELLEVUE ICE 1",36.080823,-86.95075,"7638 US-70S","37221","Metro",2
+"67","CHPT EVSE","CHPT EVSE NASHVILLE 2",36.184011,-86.634005,"2330 Jackson Downs Blvd","37214","Other",4
+"68","Taylor Place","Taylor Place",36.178294,-86.790855,"1411 Rep. John Lewis Way N","37208","Apartment complex",1
+"69","Music City","Music City Center",36.15644,-86.77903,"201 Fifth Avenue South","37203","Paid Parking",1
+"70","Publix #1665","Publix #1665",36.128822,-86.77856,"2223 8th Ave S","37204","Grocery store",1
+"71","BNA EXPRESS","BNA EXPRESS P6 STATION 1",36.132113,-86.668547,"1 Terminal Dr","37214","Airport",4
+"72","AVID AIRPORT","AVID AIRPORT AVID",36.144556,-86.675114,"44 Rachel Dr","37214","Airport",1
+"73","METRO NASHVILLE","METRO NASHVILLE NFD STATION 32",36.201006,-86.608176,"4248 Andrew Jackson Pkwy","37076","Metro",1
+"74","Vanderbilt Medical","Vanderbilt Medical Center - Dixie Place",36.14086,-86.801361,"2120 Dixie Place","37212","Hospital",1
+"75","Target -","Target - Tesla Supercharger",36.134009,-86.891923,"6814 Charlotte Pike","37209","Grocery store",1
+"76","BLCT VILLAGE","BLCT VILLAGE BELCOURT VILLAG",36.136593,-86.801711,"2111 Belcourt Ave","37212","Other",2
+"77","Willowbrook Commons","Willowbrook Commons",36.109803,-86.727162,"61 East Thompson Lane","37211","Other",1
+"78","One Metrocenter","One Metrocenter Apartments",36.190622,-86.795607,"45 Vantage Way","37228","Metro",1
+"79","The Shay","The Shay",36.1499978,-86.8209358,"9 City Place","37209","Apartment complex",1
+"80","STOCKYARDS STOCKYARDS","STOCKYARDS STOCKYARDS 2",36.17146,-86.781334,"2nd Ave N & Stockyard St SB","37201","Other",1
+"81","BNA12 BNA12","BNA12 BNA12 - 22",36.160506,-86.787571,"1010 Church St","37203","Airport",20
+"82","oneC1TY Nashville","oneC1TY Nashville",36.150654,-86.8199837,"8 City Blvd","37209","Apartment complex",1
+"83","Aertson Midtown","Aertson Midtown",36.148745906289,-86.798330227576,"905 20th Ave S","37203","Other",1
+"84","The Duke","The Duke of Nashville",36.1925886,-86.7893509,"281 Cumberland Bend #266","37228","Other",1
+"85","TARGET CORP","TARGET CORP NASHVILLE WEST1",36.134026,-86.89188,"6814 Charlotte Pike","37209","Grocery store",2
+"86","METRO NASHVILLE","METRO NASHVILLE DEC 911",36.129968,-86.791072,"2060 15th Ave","37212","Metro",1
+"87","Green Hills","Green Hills YMCA",36.103882,-86.820568,"4041 Hillsboro Cir","37215","Other",1
+"88","Opry Mills","Opry Mills",36.20312,-86.690325,"433 Opry Mills Dr","37214","Other",1
+"89","Nissan Stadium","Nissan Stadium",36.164227,-86.769632,"1 Titans Way","37213","Car dealer",1
+"90","Mapco Mart","Mapco Mart",36.134888,-86.779399,"1909 8th Ave S","37203","Grocery store",1
+"91","METRO NASHVILLE","METRO NASHVILLE STATION 3",36.142438,-86.741004,"600 Murfreesboro Pike","37210","Metro",1
+"92","Tennessee State","Tennessee State Parks - Radnor Lake State Park",36.06299,-86.80971,"1160 Otter Creek Rd","37220","Other",1
+"93","DK TIRES","DK TIRES STATION 1",36.283643,-86.696213,"530 Myatt Dr","37115","Other",1
+"94","PREMIER PARKING","PREMIER PARKING STATION5",36.144836,-86.767916,"1137 4th Ave S","37210","Paid Parking",2
+"95","PREMIER PARKING","PREMIER PARKING STATION1",36.145579,-86.768181,"1125 4th Ave S","37210","Paid Parking",4
+"96","MATHEWS 3RD","MATHEWS 3RD & LEA",36.154585,-86.771998,"615 3rd Ave S","37210","Other",1
+"97","Apex Glassworks","Apex Glassworks",36.1967754,-86.8090888,"541 Great Circle Road","37228","Apartment complex",1
