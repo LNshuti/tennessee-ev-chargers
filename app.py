@@ -5,6 +5,8 @@ from folium import plugins
 import branca
 import webbrowser
 from streamlit_folium import st_folium
+from st_aggrid import AgGrid
+from st_aggrid.grid_options_builder import GridOptionsBuilder
 
 
 # Load data
@@ -65,7 +67,18 @@ ev_stations = ev_stations.rename(
     }
 )
 
-st.write(ev_stations)
+# Create a grid option builder
+gb = GridOptionsBuilder.from_dataframe(ev_stations)
+
+# Customize grid options as needed
+gb.configure_grid_options(domLayout='autoHeight')
+gridOptions = gb.build()
+
+# Display the table with streamlit-aggrid
+AgGrid(ev_stations, gridOptions=gridOptions, enable_enterprise_modules=True)
+
+
+#st.write(ev_stations)
 
 
 # Add a link to Google Analytics
