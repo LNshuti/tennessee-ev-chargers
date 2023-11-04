@@ -10,6 +10,9 @@ App showing an interactive map of EV charging infrastructure in Tennessee. The f
 
 **Interactive Application**
 
+![image](https://github.com/LNshuti/tennessee-ev-chargers/assets/13305262/639203bd-8bfe-4e91-a153-9fb678e1d360)
+
+
 [Nashville EV Chargers](https://nashville-evcs.streamlit.app/)
 
 
